@@ -156,7 +156,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Talleres</a></li><li class="breadcrumb-item"><a href="./about.html">Taller 2</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Taller1.html">Talleres</a></li><li class="breadcrumb-item"><a href="./Taller2.html">Taller 2</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -187,13 +187,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
+  <a href="./Taller1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Taller 1</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Taller2.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Taller 2</span></a>
   </div>
 </li>
@@ -224,7 +224,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Talleres</a></li><li class="breadcrumb-item"><a href="./about.html">Taller 2</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Taller1.html">Talleres</a></li><li class="breadcrumb-item"><a href="./Taller2.html">Taller 2</a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title">Taller 2</h1>
 </div>
@@ -250,7 +250,6 @@ window.Quarto = {
 
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"igraph"</span>); <span class="fu">library</span>(<span class="st">"here"</span>);<span class="fu">library</span>(<span class="st">"rstudioapi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Adjuntando el paquete: 'igraph'</code></pre>
@@ -268,8 +267,6 @@ Adjuntando el paquete: 'igraph'</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">here</span>())</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>directorio <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="punto-1" class="level2">
 <h2 class="anchored" data-anchor-id="punto-1">Punto 1</h2>
@@ -305,8 +302,8 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-5">Punto 5</h2>
 <p>Considere el conjunto de datos dado en <code>comtrade.RData</code> (este archivo contiene una arreglo de cuatro dimensiones denominado <code>comtrade</code>), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
  [1] "Australia"            "Austria"              "Brazil"              
@@ -334,9 +331,9 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 </div>
 <p><strong>a. Calcule el aumento medio global <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(Y)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># round(Y[1:5,1:5], 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(Y)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># round(Y[1:5,1:5], 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</strong></p>
 <p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</strong></p>
@@ -361,13 +358,13 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-8">Punto 8</h2>
 <p>Considere los datos relacionales acerca de los conflictos internacionales del archivo <code>conflict.RData</code> despúes de simetrizarla débilmente y remover los nodos aislados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>a. Hacer una visualización de la red.</strong></p>
 <p><strong>b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.</strong></p>

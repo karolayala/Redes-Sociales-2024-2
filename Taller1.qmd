@@ -1,0 +1,10 @@
+---
+title: "Taller 1"
+author: "Karol Ayala"
+date: ""
+output:
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: cosmo
+---

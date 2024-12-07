@@ -1,13 +1,34 @@
 project:
   type: website
+  #title: "Redes Sociales - Karol Stefanny Ayala López"
   output-dir: "docs"
 website:
-  title: "Redes Sociales 2024-2"
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+    title: "Redes Sociales - Karol Stefanny Ayala López"
+    # left:
+    #   - text: "Karol Stefanny Ayala López"
+    #     #href: inicio.qmd
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Talleres"
+        contents:
+          - text: "Taller 1"
+            href: Taller1.qmd
+          - text: "Taller 2"
+            href: Taller2.qmd
+      
+# project:
+#   type: website
+#   output-dir: "docs"
+# website:
+#   title: "Redes Sociales"
+#   navbar:
+#     left:
+#       - href: index.qmd
+#         text: Taller 1
+#       - about.qmd
 
 format:
   html:

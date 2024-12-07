@@ -8,7 +8,7 @@
 
 <meta name="author" content="Karol Ayala">
 
-<title>Taller 2</title>
+<title>Redes Sociales</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -102,35 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -143,12 +80,24 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Redes Sociales - Karol Stefanny Ayala López</span>
+    <span class="navbar-title">Redes Sociales</span>
     </a>
   </div>
-        <div class="quarto-navbar-tools tools-end">
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <span class="nav-link">
+<span class="menu-text">Karol Stefanny Ayala López</span>
+    </span>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
 </div>
-          <div id="quarto-search" class="" title="Search"></div>
       </div> <!-- /container-fluid -->
     </nav>
   <nav class="quarto-secondary-nav">
@@ -156,7 +105,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Talleres</a></li><li class="breadcrumb-item"><a href="./about.html">Taller 2</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Redes Sociales</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -193,7 +142,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link active">
+  <a href="./about.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Taller 2</span></a>
   </div>
 </li>
@@ -204,29 +153,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#punto-1" id="toc-punto-1" class="nav-link active" data-scroll-target="#punto-1">Punto 1</a></li>
-  <li><a href="#punto-2" id="toc-punto-2" class="nav-link" data-scroll-target="#punto-2">Punto 2</a></li>
-  <li><a href="#punto-3" id="toc-punto-3" class="nav-link" data-scroll-target="#punto-3">Punto 3</a></li>
-  <li><a href="#punto-4" id="toc-punto-4" class="nav-link" data-scroll-target="#punto-4">Punto 4</a></li>
-  <li><a href="#punto-5" id="toc-punto-5" class="nav-link" data-scroll-target="#punto-5">Punto 5</a></li>
-  <li><a href="#punto-6" id="toc-punto-6" class="nav-link" data-scroll-target="#punto-6">Punto 6</a></li>
-  <li><a href="#punto-7" id="toc-punto-7" class="nav-link" data-scroll-target="#punto-7">Punto 7</a></li>
-  <li><a href="#punto-8" id="toc-punto-8" class="nav-link" data-scroll-target="#punto-8">Punto 8</a></li>
-  <li><a href="#punto-9" id="toc-punto-9" class="nav-link" data-scroll-target="#punto-9">Punto 9</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Talleres</a></li><li class="breadcrumb-item"><a href="./about.html">Taller 2</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Taller 2</h1>
+<h1 class="title">Redes Sociales</h1>
 </div>
 
 
@@ -249,136 +184,8 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"igraph"</span>); <span class="fu">library</span>(<span class="st">"here"</span>);<span class="fu">library</span>(<span class="st">"rstudioapi"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Adjuntando el paquete: 'igraph'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    decompose, spectrum</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:base':
-
-    union</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="fu">here</span>())</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>directorio <span class="ot">&lt;-</span> <span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="punto-1" class="level2">
-<h2 class="anchored" data-anchor-id="punto-1">Punto 1</h2>
-<p>El grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span>. El <em>out-degree</em> <span class="math inline">\(d_i^{\text{out}}\)</span> y el <em>in-degree</em> <span class="math inline">\(d_i^{\text{in}}\)</span> del nodo <span class="math inline">\(i\)</span> se pueden calcular respectivamente como: <span class="math display">\[
-d_i^{\text{out}} = \sum_{j:j\neq i} y_{i,j}
-\qquad\text{y}\qquad
-d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
-\]</span> <em>Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces <span class="math inline">\(d_i^{\text{out}} = d_i^{\text{in}}\)</span>.</em></p>
-</section>
-<section id="punto-2" class="level2">
-<h2 class="anchored" data-anchor-id="punto-2">Punto 2</h2>
-<p>Tanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como <span class="math display">\[
-\bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
-\]</span> donde <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).</p>
-<p><strong>a. Muestre que para relaciones no dirigidas la media global <span class="math inline">\(\bar{y}\)</span> es igual a la media tanto de la parte triangular superior de <span class="math inline">\(\mathbf{Y}\)</span> como de la parte triangular inferior de <span class="math inline">\(\mathbf{Y}\)</span>.</strong></p>
-<p><strong>b. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.</strong></p>
-<p><strong>c.&nbsp;Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que <span class="math inline">\((n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}\)</span>. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.</strong></p>
-</section>
-<section id="punto-3" class="level2">
-<h2 class="anchored" data-anchor-id="punto-3">Punto 3</h2>
-<p>Considere un grafo estrella de orden <span class="math inline">\(n\)</span> y un grafo círculo de orden <span class="math inline">\(n\)</span>. A continuación se representan ambos grafos para <span class="math inline">\(n=9\)</span>. Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por <span class="math inline">\(n - 1\)</span>.</p>
-<p><strong>a. Muestre que para el grafo círculo de orden <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\)</span>.</strong></p>
-<p><strong>b. Muestre que para el grafo estrella de orden <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\frac{n-1}{n} \rightarrow 2\)</span> cuando <span class="math inline">\(n\rightarrow\infty\)</span>.</strong></p>
-</section>
-<section id="punto-4" class="level2">
-<h2 class="anchored" data-anchor-id="punto-4">Punto 4</h2>
-<p>¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?</p>
-<p><strong>a. <span class="math inline">\(2 - 1 - 6 - 3 - 4\)</span>.</strong></p>
-<p><strong>b. <span class="math inline">\(2 - 1 - 6 - 3 - 4 - 1 - 5\)</span>.</strong></p>
-<p><strong>c.&nbsp;<span class="math inline">\(2 - 1 - 2 - 5 - 1 - 4\)</span>.</strong></p>
-</section>
-<section id="punto-5" class="level2">
-<h2 class="anchored" data-anchor-id="punto-5">Punto 5</h2>
-<p>Considere el conjunto de datos dado en <code>comtrade.RData</code> (este archivo contiene una arreglo de cuatro dimensiones denominado <code>comtrade</code>), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[[1]]
- [1] "Australia"            "Austria"              "Brazil"              
- [4] "Canada"               "China"                "China, Hong Kong SAR"
- [7] "Czech Rep."           "Denmark"              "Finland"             
-[10] "France"               "Germany"              "Greece"              
-[13] "Indonesia"            "Ireland"              "Italy"               
-[16] "Japan"                "Malaysia"             "Mexico"              
-[19] "Netherlands"          "New Zealand"          "Norway"              
-[22] "Rep. of Korea"        "Singapore"            "Spain"               
-[25] "Sweden"               "Switzerland"          "Thailand"            
-[28] "Turkey"               "United Kingdom"       "USA"                 
-
-[[2]]
-[1] "Chemicals"                                    
-[2] "Crude materials, inedible, except fuels"      
-[3] "Food and live animals"                        
-[4] "Machinery and transport equipment"            
-[5] "Manufact goods classified chiefly by material"
-[6] "Miscellaneous manufactured articles"          
-
-[[3]]
- [1] "1996" "1997" "1998" "1999" "2000" "2001" "2002" "2003" "2004" "2005"</code></pre>
-</div>
-</div>
-<p><strong>a. Calcule el aumento medio global <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(Y)</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># round(Y[1:5,1:5], 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</strong></p>
-<p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</strong></p>
-<p><strong>d.&nbsp;Calcule tanto la media de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la media de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>.</strong></p>
-<p><strong>e. Calcule tanto la DE de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la DE de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</strong></p>
-<p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> y los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Realice un dispersograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span> (eje <span class="math inline">\(y\)</span>) frente a los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</strong></p>
-</section>
-<section id="punto-6" class="level2">
-<h2 class="anchored" data-anchor-id="punto-6">Punto 6</h2>
-<p>Considere el conjunto de datos dado en <code>conflict.RData</code> recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo <code>conflict.RData</code> contiene una lista con tres arreglos, <code>X</code>, <code>Y</code>, y <code>D</code>. <code>X</code> tiene tres campos: <code>population</code> (población en millones), <code>gdp</code> (PIB en millones de dolares) <code>polity</code> (puntuación política, un índice de democracia). <code>Y</code> hace referencia a una matriz <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> en la que <span class="math inline">\(y_{i,j}\)</span> representa el número de conflictos iniciados por el país <span class="math inline">\(i\)</span> hacia el país <span class="math inline">\(j\)</span>. Finalmente, <code>D</code>es un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).</p>
-<p><strong>a. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.</strong></p>
-<p><strong>b. Calcule e interprete la media global.</strong></p>
-<p><strong>c.&nbsp;Obtenga y grafique la distribución del <em>out-degree</em> y del <em>in-degree</em>. Calcule e interprete la media y la desviación estándar de esta distribución. </strong></p>
-<p><strong>d.&nbsp;Calcule el coeficiente de correlación entre los valores del <em>out-degree</em> y el <em>in-degree</em>. Realice un dispersograma de los grados de entrada (eje <span class="math inline">\(y\)</span>) frente a los grados de salida (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</strong></p>
-<p><strong>e. Identifique los países mas activos.</strong></p>
-</section>
-<section id="punto-7" class="level2">
-<h2 class="anchored" data-anchor-id="punto-7">Punto 7</h2>
-<p>Para todos los vértices de los cuatro grafos que se presentan a continuación, calcular el grado y las medidas de centralidad. Para cada grafo completar e interpretar la siguiente tabla. Interpretar los resultados.</p>
-</section>
-<section id="punto-8" class="level2">
-<h2 class="anchored" data-anchor-id="punto-8">Punto 8</h2>
-<p>Considere los datos relacionales acerca de los conflictos internacionales del archivo <code>conflict.RData</code> despúes de simetrizarla débilmente y remover los nodos aislados:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>a. Hacer una visualización de la red.</strong></p>
-<p><strong>b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.</strong></p>
-<p><strong>c.&nbsp;Interpretar los resultados</strong></p>
-</section>
-<section id="punto-9" class="level2">
-<h2 class="anchored" data-anchor-id="punto-9">Punto 9</h2>
-<p>Sintetizar y replicar los Capítulos 6, 8, y 9 de Luke, D. A. (2015).</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

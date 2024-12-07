@@ -2,15 +2,235 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Redes Sociales 2024-2",
+    "title": "Redes Sociales",
     "section": "",
     "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "Taller 2",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "library(\"igraph\"); library(\"here\");library(\"rstudioapi\")\n\n\nAdjuntando el paquete: 'igraph'\n\n\nThe following objects are masked from 'package:stats':\n\n    decompose, spectrum\n\n\nThe following object is masked from 'package:base':\n\n    union\n\n\nhere() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2\n\nsetwd(here())\ndirectorio &lt;- getwd()",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "inicio.html",
+    "href": "inicio.html",
+    "title": "Redes Sociales",
+    "section": "",
+    "text": "Karol Ayala"
+  },
+  {
+    "objectID": "about.html#punto-2",
+    "href": "about.html#punto-2",
+    "title": "Taller 2",
+    "section": "Punto 2",
+    "text": "Punto 2\nTanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como \\[\n\\bar{y}=\\frac{1}{n(n-1)}\\sum_{i,j:i\\neq j} y_{i,j}\n\\] donde \\(\\mathbf{Y}=[y_{i,j}]\\) es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).\na. Muestre que para relaciones no dirigidas la media global \\(\\bar{y}\\) es igual a la media tanto de la parte triangular superior de \\(\\mathbf{Y}\\) como de la parte triangular inferior de \\(\\mathbf{Y}\\).\nb. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.\nc. Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que \\((n-1)\\bar{y} = \\bar{d}^{\\text{out}}=\\bar{d}^{\\text{in}}\\). Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-3",
+    "href": "about.html#punto-3",
+    "title": "Taller 2",
+    "section": "Punto 3",
+    "text": "Punto 3\nConsidere un grafo estrella de orden \\(n\\) y un grafo círculo de orden \\(n\\). A continuación se representan ambos grafos para \\(n=9\\). Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por \\(n - 1\\).\na. Muestre que para el grafo círculo de orden \\(n\\) el grado promedio es \\(\\bar{d} = 2\\).\nb. Muestre que para el grafo estrella de orden \\(n\\) el grado promedio es \\(\\bar{d} = 2\\frac{n-1}{n} \\rightarrow 2\\) cuando \\(n\\rightarrow\\infty\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-1",
+    "href": "about.html#punto-1",
+    "title": "Taller 2",
+    "section": "Punto 1",
+    "text": "Punto 1\nEl grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia \\(\\mathbf{Y}=[y_{i,j}]\\). El out-degree \\(d_i^{\\text{out}}\\) y el in-degree \\(d_i^{\\text{in}}\\) del nodo \\(i\\) se pueden calcular respectivamente como: \\[\nd_i^{\\text{out}} = \\sum_{j:j\\neq i} y_{i,j}\n\\qquad\\text{y}\\qquad\nd_i^{\\text{in}} = \\sum_{j:j\\neq i} y_{j,i}\n\\] Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces \\(d_i^{\\text{out}} = d_i^{\\text{in}}\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-4",
+    "href": "about.html#punto-4",
+    "title": "Taller 2",
+    "section": "Punto 4",
+    "text": "Punto 4\n¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?\na. \\(2 - 1 - 6 - 3 - 4\\).\nb. \\(2 - 1 - 6 - 3 - 4 - 1 - 5\\).\nc. \\(2 - 1 - 2 - 5 - 1 - 4\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-5",
+    "href": "about.html#punto-5",
+    "title": "Taller 2",
+    "section": "Punto 5",
+    "text": "Punto 5\nConsidere el conjunto de datos dado en comtrade.RData (este archivo contiene una arreglo de cuatro dimensiones denominado comtrade), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:\n\nload(\"comtrade.RData\")\ndimnames(comtrade)[c(1,3,4)]\n\n[[1]]\n [1] \"Australia\"            \"Austria\"              \"Brazil\"              \n [4] \"Canada\"               \"China\"                \"China, Hong Kong SAR\"\n [7] \"Czech Rep.\"           \"Denmark\"              \"Finland\"             \n[10] \"France\"               \"Germany\"              \"Greece\"              \n[13] \"Indonesia\"            \"Ireland\"              \"Italy\"               \n[16] \"Japan\"                \"Malaysia\"             \"Mexico\"              \n[19] \"Netherlands\"          \"New Zealand\"          \"Norway\"              \n[22] \"Rep. of Korea\"        \"Singapore\"            \"Spain\"               \n[25] \"Sweden\"               \"Switzerland\"          \"Thailand\"            \n[28] \"Turkey\"               \"United Kingdom\"       \"USA\"                 \n\n[[2]]\n[1] \"Chemicals\"                                    \n[2] \"Crude materials, inedible, except fuels\"      \n[3] \"Food and live animals\"                        \n[4] \"Machinery and transport equipment\"            \n[5] \"Manufact goods classified chiefly by material\"\n[6] \"Miscellaneous manufactured articles\"          \n\n[[3]]\n [1] \"1996\" \"1997\" \"1998\" \"1999\" \"2000\" \"2001\" \"2002\" \"2003\" \"2004\" \"2005\"\n\n\na. Calcule el aumento medio global \\(\\bar{y}\\) a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia Y dada por:\n\n# Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)\n# dim(Y)\n# round(Y[1:5,1:5], 2)\n\nb. Calcule la media de todas las observaciones de cada fila de Y, es decir, calcule la media fila \\(\\bar{y}_{i\\bullet}=\\frac{1}{n-1}\\sum_{j:j\\neq i} y_{i,j}\\) para cada país. Realice una histograma de los promedios fila \\(\\bar{y}_{i\\bullet}\\). Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila \\(\\bar{y}_{i\\bullet}\\)?\nc. Calcule la media de todas las observaciones de cada columna de Y, es decir, calcule la media columna \\(\\bar{y}_{\\bullet j}=\\frac{1}{n-1}\\sum_{i:i\\neq j} y_{i,j}\\) para cada país. Realice una histograma de los promedios columna \\(\\bar{y}_{\\bullet j}\\). Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna \\(\\bar{y}_{\\bullet j}\\)?\nd. Calcule tanto la media de los promedios fila \\(\\bar{y}_{i\\bullet}\\) como la media de los promedios columna \\(\\bar{y}_{\\bullet j}\\).\ne. Calcule tanto la DE de los promedios fila \\(\\bar{y}_{i\\bullet}\\) como la DE de los promedios columna \\(\\bar{y}_{\\bullet j}\\). ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?\nf. Calcule el coeficiente de correlación entre los promedios fila \\(\\bar{y}_{i\\bullet}\\) y los promedios columna \\(\\bar{y}_{\\bullet j}\\). Realice un dispersograma de los promedios columna \\(\\bar{y}_{\\bullet j}\\) (eje \\(y\\)) frente a los promedios fila \\(\\bar{y}_{i\\bullet}\\) (eje \\(x\\)), junto con la recta \\(y=x\\) como punto de referencia. ¿Qué se puede concluir?",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-6",
+    "href": "about.html#punto-6",
+    "title": "Taller 2",
+    "section": "Punto 6",
+    "text": "Punto 6\nConsidere el conjunto de datos dado en conflict.RData recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo conflict.RData contiene una lista con tres arreglos, X, Y, y D. X tiene tres campos: population (población en millones), gdp (PIB en millones de dolares) polity (puntuación política, un índice de democracia). Y hace referencia a una matriz \\(\\mathbf{Y}=[y_{i,j}]\\) en la que \\(y_{i,j}\\) representa el número de conflictos iniciados por el país \\(i\\) hacia el país \\(j\\). Finalmente, Des un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).\na. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.\nb. Calcule e interprete la media global.\nc. Obtenga y grafique la distribución del out-degree y del in-degree. Calcule e interprete la media y la desviación estándar de esta distribución. \nd. Calcule el coeficiente de correlación entre los valores del out-degree y el in-degree. Realice un dispersograma de los grados de entrada (eje \\(y\\)) frente a los grados de salida (eje \\(x\\)), junto con la recta \\(y=x\\) como punto de referencia. ¿Qué se puede concluir?\ne. Identifique los países mas activos.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-7",
+    "href": "about.html#punto-7",
+    "title": "Taller 2",
+    "section": "Punto 7",
+    "text": "Punto 7\nPara todos los vértices de los cuatro grafos que se presentan a continuación, calcular el grado y las medidas de centralidad. Para cada grafo completar e interpretar la siguiente tabla. Interpretar los resultados.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-8",
+    "href": "about.html#punto-8",
+    "title": "Taller 2",
+    "section": "Punto 8",
+    "text": "Punto 8\nConsidere los datos relacionales acerca de los conflictos internacionales del archivo conflict.RData despúes de simetrizarla débilmente y remover los nodos aislados:\n\n# datos\n# load(\"conflict.RData\")\n# Y &lt;- dat$Y\n# # remover nodos aislados\n# Y &lt;- 1*( Y*t(Y) &gt; 0 )\n# deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)\n# Y &lt;- Y[deg &gt; 0, deg &gt; 0]\n\na. Hacer una visualización de la red.\nb. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.\nc. Interpretar los resultados",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "about.html#punto-9",
+    "href": "about.html#punto-9",
+    "title": "Taller 2",
+    "section": "Punto 9",
+    "text": "Punto 9\nSintetizar y replicar los Capítulos 6, 8, y 9 de Luke, D. A. (2015).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html",
+    "href": "Taller2.html",
+    "title": "Taller 2",
+    "section": "",
+    "text": "Adjuntando el paquete: 'igraph'\n\n\nThe following objects are masked from 'package:stats':\n\n    decompose, spectrum\n\n\nThe following object is masked from 'package:base':\n\n    union\n\n\nhere() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-1",
+    "href": "Taller2.html#punto-1",
+    "title": "Taller 2",
+    "section": "Punto 1",
+    "text": "Punto 1\nEl grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia \\(\\mathbf{Y}=[y_{i,j}]\\). El out-degree \\(d_i^{\\text{out}}\\) y el in-degree \\(d_i^{\\text{in}}\\) del nodo \\(i\\) se pueden calcular respectivamente como: \\[\nd_i^{\\text{out}} = \\sum_{j:j\\neq i} y_{i,j}\n\\qquad\\text{y}\\qquad\nd_i^{\\text{in}} = \\sum_{j:j\\neq i} y_{j,i}\n\\] Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces \\(d_i^{\\text{out}} = d_i^{\\text{in}}\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-2",
+    "href": "Taller2.html#punto-2",
+    "title": "Taller 2",
+    "section": "Punto 2",
+    "text": "Punto 2\nTanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como \\[\n\\bar{y}=\\frac{1}{n(n-1)}\\sum_{i,j:i\\neq j} y_{i,j}\n\\] donde \\(\\mathbf{Y}=[y_{i,j}]\\) es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).\na. Muestre que para relaciones no dirigidas la media global \\(\\bar{y}\\) es igual a la media tanto de la parte triangular superior de \\(\\mathbf{Y}\\) como de la parte triangular inferior de \\(\\mathbf{Y}\\).\nb. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.\nc. Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que \\((n-1)\\bar{y} = \\bar{d}^{\\text{out}}=\\bar{d}^{\\text{in}}\\). Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-3",
+    "href": "Taller2.html#punto-3",
+    "title": "Taller 2",
+    "section": "Punto 3",
+    "text": "Punto 3\nConsidere un grafo estrella de orden \\(n\\) y un grafo círculo de orden \\(n\\). A continuación se representan ambos grafos para \\(n=9\\). Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por \\(n - 1\\).\na. Muestre que para el grafo círculo de orden \\(n\\) el grado promedio es \\(\\bar{d} = 2\\).\nb. Muestre que para el grafo estrella de orden \\(n\\) el grado promedio es \\(\\bar{d} = 2\\frac{n-1}{n} \\rightarrow 2\\) cuando \\(n\\rightarrow\\infty\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-4",
+    "href": "Taller2.html#punto-4",
+    "title": "Taller 2",
+    "section": "Punto 4",
+    "text": "Punto 4\n¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?\na. \\(2 - 1 - 6 - 3 - 4\\).\nb. \\(2 - 1 - 6 - 3 - 4 - 1 - 5\\).\nc. \\(2 - 1 - 2 - 5 - 1 - 4\\).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-5",
+    "href": "Taller2.html#punto-5",
+    "title": "Taller 2",
+    "section": "Punto 5",
+    "text": "Punto 5\nConsidere el conjunto de datos dado en comtrade.RData (este archivo contiene una arreglo de cuatro dimensiones denominado comtrade), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:\n\nload(\"comtrade.RData\")\ndimnames(comtrade)[c(1,3,4)]\n\n[[1]]\n [1] \"Australia\"            \"Austria\"              \"Brazil\"              \n [4] \"Canada\"               \"China\"                \"China, Hong Kong SAR\"\n [7] \"Czech Rep.\"           \"Denmark\"              \"Finland\"             \n[10] \"France\"               \"Germany\"              \"Greece\"              \n[13] \"Indonesia\"            \"Ireland\"              \"Italy\"               \n[16] \"Japan\"                \"Malaysia\"             \"Mexico\"              \n[19] \"Netherlands\"          \"New Zealand\"          \"Norway\"              \n[22] \"Rep. of Korea\"        \"Singapore\"            \"Spain\"               \n[25] \"Sweden\"               \"Switzerland\"          \"Thailand\"            \n[28] \"Turkey\"               \"United Kingdom\"       \"USA\"                 \n\n[[2]]\n[1] \"Chemicals\"                                    \n[2] \"Crude materials, inedible, except fuels\"      \n[3] \"Food and live animals\"                        \n[4] \"Machinery and transport equipment\"            \n[5] \"Manufact goods classified chiefly by material\"\n[6] \"Miscellaneous manufactured articles\"          \n\n[[3]]\n [1] \"1996\" \"1997\" \"1998\" \"1999\" \"2000\" \"2001\" \"2002\" \"2003\" \"2004\" \"2005\"\n\n\na. Calcule el aumento medio global \\(\\bar{y}\\) a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia Y dada por:\n\n# Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)\n# dim(Y)\n# round(Y[1:5,1:5], 2)\n\nb. Calcule la media de todas las observaciones de cada fila de Y, es decir, calcule la media fila \\(\\bar{y}_{i\\bullet}=\\frac{1}{n-1}\\sum_{j:j\\neq i} y_{i,j}\\) para cada país. Realice una histograma de los promedios fila \\(\\bar{y}_{i\\bullet}\\). Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila \\(\\bar{y}_{i\\bullet}\\)?\nc. Calcule la media de todas las observaciones de cada columna de Y, es decir, calcule la media columna \\(\\bar{y}_{\\bullet j}=\\frac{1}{n-1}\\sum_{i:i\\neq j} y_{i,j}\\) para cada país. Realice una histograma de los promedios columna \\(\\bar{y}_{\\bullet j}\\). Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna \\(\\bar{y}_{\\bullet j}\\)?\nd. Calcule tanto la media de los promedios fila \\(\\bar{y}_{i\\bullet}\\) como la media de los promedios columna \\(\\bar{y}_{\\bullet j}\\).\ne. Calcule tanto la DE de los promedios fila \\(\\bar{y}_{i\\bullet}\\) como la DE de los promedios columna \\(\\bar{y}_{\\bullet j}\\). ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?\nf. Calcule el coeficiente de correlación entre los promedios fila \\(\\bar{y}_{i\\bullet}\\) y los promedios columna \\(\\bar{y}_{\\bullet j}\\). Realice un dispersograma de los promedios columna \\(\\bar{y}_{\\bullet j}\\) (eje \\(y\\)) frente a los promedios fila \\(\\bar{y}_{i\\bullet}\\) (eje \\(x\\)), junto con la recta \\(y=x\\) como punto de referencia. ¿Qué se puede concluir?",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-6",
+    "href": "Taller2.html#punto-6",
+    "title": "Taller 2",
+    "section": "Punto 6",
+    "text": "Punto 6\nConsidere el conjunto de datos dado en conflict.RData recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo conflict.RData contiene una lista con tres arreglos, X, Y, y D. X tiene tres campos: population (población en millones), gdp (PIB en millones de dolares) polity (puntuación política, un índice de democracia). Y hace referencia a una matriz \\(\\mathbf{Y}=[y_{i,j}]\\) en la que \\(y_{i,j}\\) representa el número de conflictos iniciados por el país \\(i\\) hacia el país \\(j\\). Finalmente, Des un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).\na. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.\nb. Calcule e interprete la media global.\nc. Obtenga y grafique la distribución del out-degree y del in-degree. Calcule e interprete la media y la desviación estándar de esta distribución. \nd. Calcule el coeficiente de correlación entre los valores del out-degree y el in-degree. Realice un dispersograma de los grados de entrada (eje \\(y\\)) frente a los grados de salida (eje \\(x\\)), junto con la recta \\(y=x\\) como punto de referencia. ¿Qué se puede concluir?\ne. Identifique los países mas activos.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-7",
+    "href": "Taller2.html#punto-7",
+    "title": "Taller 2",
+    "section": "Punto 7",
+    "text": "Punto 7\nPara todos los vértices de los cuatro grafos que se presentan a continuación, calcular el grado y las medidas de centralidad. Para cada grafo completar e interpretar la siguiente tabla. Interpretar los resultados.",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-8",
+    "href": "Taller2.html#punto-8",
+    "title": "Taller 2",
+    "section": "Punto 8",
+    "text": "Punto 8\nConsidere los datos relacionales acerca de los conflictos internacionales del archivo conflict.RData despúes de simetrizarla débilmente y remover los nodos aislados:\n\n# datos\n# load(\"conflict.RData\")\n# Y &lt;- dat$Y\n# # remover nodos aislados\n# Y &lt;- 1*( Y*t(Y) &gt; 0 )\n# deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)\n# Y &lt;- Y[deg &gt; 0, deg &gt; 0]\n\na. Hacer una visualización de la red.\nb. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.\nc. Interpretar los resultados",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
+  },
+  {
+    "objectID": "Taller2.html#punto-9",
+    "href": "Taller2.html#punto-9",
+    "title": "Taller 2",
+    "section": "Punto 9",
+    "text": "Punto 9\nSintetizar y replicar los Capítulos 6, 8, y 9 de Luke, D. A. (2015).",
+    "crumbs": [
+      "Talleres",
+      "Taller 2"
+    ]
   }
 ]
