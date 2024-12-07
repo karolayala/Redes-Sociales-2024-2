@@ -8,61 +8,78 @@ output:
     number_sections: yes
     theme: cosmo
 ---
-```{r}
+
+```{r, warning=FALSE, message=FALSE}
 #| echo: false
-library("igraph"); library("here");library("rstudioapi")
+library("igraph"); library("here");library("rstudioapi"); library("ggplot2"); library("knitr")
+mitema <-
+theme(
+plot.title=element_text(family="sans",face="bold",size=20,vjust=0.5,hjust=0.5,
+color="black",angle=0),
+axis.title.x=element_text(family="sans",face="bold",size=16,vjust=0.5,hjust=0.5,
+color="black",angle=0),
+axis.title.y=element_text(family="sans",face="bold",size=16,vjust=0.5,hjust=0.5,
+color="black",angle=90),
+axis.text.x=element_text(family="mono",face="bold",size=14,vjust=0.5,hjust=0.5,
+color="black",angle=0),
+axis.text.y=element_text(family="mono",face="bold",size=14,vjust=0.5,hjust=0.5,
+color="black",angle=0),
+panel.background=element_rect(fill="gray92"),
+panel.grid.major=element_line(color="white",size=1),
+panel.grid.minor=element_line(color="white",size=0.5)
+)
 setwd(here())
 directorio <- getwd()
 ```
 
 ## Punto 1
-El grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia $\mathbf{Y}=[y_{i,j}]$. El *out-degree* $d_i^{\text{out}}$ y el *in-degree* $d_i^{\text{in}}$ del nodo $i$ se pueden calcular respectivamente como:
-$$
+
+El grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia $\mathbf{Y}=[y_{i,j}]$. El *out-degree* $d_i^{\text{out}}$ y el *in-degree* $d_i^{\text{in}}$ del nodo $i$ se pueden calcular respectivamente como: $$
 d_i^{\text{out}} = \sum_{j:j\neq i} y_{i,j}
 \qquad\text{y}\qquad
 d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
-$$
-*Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces $d_i^{\text{out}} = d_i^{\text{in}}$.*
+$$ *Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces* $d_i^{\text{out}} = d_i^{\text{in}}$.
 
 ## Punto 2
-Tanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como
-$$
-\bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
-$$
-donde $\mathbf{Y}=[y_{i,j}]$ es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).
 
-**a. Muestre que para relaciones no dirigidas la media global $\bar{y}$ es igual a la media tanto de la parte triangular superior de $\mathbf{Y}$ como de la parte triangular inferior de $\mathbf{Y}$.**
+Tanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como $$
+\bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
+$$ donde $\mathbf{Y}=[y_{i,j}]$ es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).
+
+**a. Muestre que para relaciones no dirigidas la media global** $\bar{y}$ es igual a la media tanto de la parte triangular superior de $\mathbf{Y}$ como de la parte triangular inferior de $\mathbf{Y}$.
 
 **b. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.**
 
-**c. Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que $(n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}$. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.**
+**c. Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que** $(n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}$. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.
 
 ## Punto 3
+
 Considere un grafo estrella de orden $n$ y un grafo círculo de orden $n$. A continuación se representan ambos grafos para $n=9$. Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por $n - 1$.
 
-**a. Muestre que para el grafo círculo  de orden $n$ el grado promedio es $\bar{d} = 2$.**
+**a. Muestre que para el grafo círculo de orden** $n$ el grado promedio es $\bar{d} = 2$.
 
-**b. Muestre que para el grafo estrella de orden $n$ el grado promedio es $\bar{d} = 2\frac{n-1}{n} \rightarrow 2$ cuando $n\rightarrow\infty$.**
+**b. Muestre que para el grafo estrella de orden** $n$ el grado promedio es $\bar{d} = 2\frac{n-1}{n} \rightarrow 2$ cuando $n\rightarrow\infty$.
 
 ```{r, eval = TRUE, echo=FALSE, out.width="70%", fig.pos = 'H', fig.align = 'center'}
 # knitr::include_graphics("star_circle.png")
 ```
 
 ## Punto 4
+
 ¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?
 
-**a. $2 - 1 - 6 - 3 - 4$.**
+**a.** $2 - 1 - 6 - 3 - 4$.
 
-**b. $2 - 1 - 6 - 3 - 4 - 1 - 5$.**
+**b.** $2 - 1 - 6 - 3 - 4 - 1 - 5$.
 
-**c. $2 - 1 - 2 - 5 - 1 - 4$.**
-
+**c.** $2 - 1 - 2 - 5 - 1 - 4$.
 
 ```{r, eval = TRUE, echo=FALSE, out.width="25%", fig.pos = 'H', fig.align = 'center'}
 #knitr::include_graphics("wtp.png")
 ```
 
 ## Punto 5
+
 Considere el conjunto de datos dado en `comtrade.RData` (este archivo contiene una arreglo de cuatro dimensiones denominado `comtrade`), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:
 
 ```{r}
@@ -70,42 +87,84 @@ load("comtrade.RData")
 dimnames(comtrade)[c(1,3,4)]
 View(comtrade[1,2,,]) # Paises, paises, productos y año
 ```
-**a. Calcule el aumento medio global $\bar{y}$ a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia `Y` dada por:**
+
+**a. Calcule el aumento medio global** $\bar{y}$ a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia `Y` dada por:
+
 ```{r}
-# Y <- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)
-# dim(Y)
-# round(Y[1:5,1:5], 2)
+Y <- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean) #Media de años y bienes manufacturados
+n <- dim(Y)[1]
+Y[which(is.na(Y))] <- 0 
+
+#** mean(y) **#
+sum(Y)/(n*(n-1))
+
+# No es quivalente a densidad porque es ponderada (?)
+g5a <- graph_from_adjacency_matrix(Y, weighted = T)
+ecount(g5a)/(vcount(g5a)*(vcount(g5a)-1))
+edge_density(graph = g5a)
 ```
 
-**b. Calcule la media de todas las observaciones de cada fila de `Y`, es decir, calcule la media fila $\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}$ para cada país. Realice una histograma de los promedios fila $\bar{y}_{i\bullet}$. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila $\bar{y}_{i\bullet}$?**
+**b. Calcule la media de todas las observaciones de cada fila de `Y`, es decir, calcule la media fila** $\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}$ para cada país. Realice una histograma de los promedios fila $\bar{y}_{i\bullet}$. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila $\bar{y}_{i\bullet}$?
+```{r, warning=FALSE, message=FALSE}
 
-**c. Calcule la media de todas las observaciones de cada columna de `Y`, es decir, calcule la media columna $\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}$ para cada país. Realice una histograma de los promedios columna $\bar{y}_{\bullet j}$. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna $\bar{y}_{\bullet j}$?**
+mfila <- apply(Y, MARGIN = 1, FUN = mean)
+mfila <- data.frame(Pais = mfila, row.names = NULL)
+#hist(apply(Y, MARGIN = 1, FUN = mean))
+ggplot(mfila, aes(x = Pais)) + 
+  geom_histogram(alpha = 0.8, bins = 7, position = "identity", fill="blue", colour = "black",lwd = 0.1,linetype = 1) +
+labs(title=expression(paste("Media de observaciones por fila (", bar(y)[i.], ")")), x="Media de crecimiento anual en bienes manufacturados", y="Frecuencia") + mitema + 
+  theme(strip.background=element_rect(color="black",fill="gray80",size=1), strip.text=element_text(face="bold",size=15,vjust=0.5,hjust=0.5,color="black",angle=0))
 
-**d. Calcule tanto la media de los promedios fila $\bar{y}_{i\bullet}$ como la media de los promedios columna $\bar{y}_{\bullet j}$.**
+```
 
-**e. Calcule tanto la DE de los promedios fila $\bar{y}_{i\bullet}$ como la DE de los promedios columna $\bar{y}_{\bullet j}$. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?**
+Interpretar: 
 
-**f. Calcule el coeficiente de correlación entre los promedios fila $\bar{y}_{i\bullet}$ y los promedios columna $\bar{y}_{\bullet j}$. Realice un dispersograma de los promedios columna $\bar{y}_{\bullet j}$ (eje $y$) frente a los promedios fila $\bar{y}_{i\bullet}$ (eje $x$), junto con la recta $y=x$ como punto de referencia. ¿Qué se puede concluir?**
+**c. Calcule la media de todas las observaciones de cada columna de `Y`, es decir, calcule la media columna** $\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}$ para cada país. Realice una histograma de los promedios columna $\bar{y}_{\bullet j}$. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna $\bar{y}_{\bullet j}$?
+```{r, warning=FALSE, message=FALSE}
+mcol <- apply(Y, MARGIN = 2, FUN = mean)
+mcol <- data.frame(Pais = mcol, row.names = NULL)
+#hist(apply(Y, MARGIN = 2, FUN = mean))
+ggplot(mcol, aes(x = Pais)) + 
+  geom_histogram(alpha = 0.8, position = "identity", bins = 7, fill="blue", colour = "black",lwd = 0.1,linetype = 1) +
+labs(title=expression(paste("Media de observaciones por columna (", bar(y)[.j], ")")), x="Media de crecimiento anual en bienes manufacturados", y="Frecuencia") + mitema + 
+  theme(strip.background=element_rect(color="black",fill="gray80",size=1), strip.text=element_text(face="bold",size=15,vjust=0.5,hjust=0.5,color="black",angle=0))
+
+```
+
+**d. Calcule tanto la media de los promedios fila** $\bar{y}_{i\bullet}$ como la media de los promedios columna $\bar{y}_{\bullet j}$.
+```{r}
+
+kable(mean(mfila[,1]))
+
+mean(mcol[,1])
+```
+
+**e. Calcule tanto la DE de los promedios fila** $\bar{y}_{i\bullet}$ como la DE de los promedios columna $\bar{y}_{\bullet j}$. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?
+
+**f. Calcule el coeficiente de correlación entre los promedios fila** $\bar{y}_{i\bullet}$ y los promedios columna $\bar{y}_{\bullet j}$. Realice un dispersograma de los promedios columna $\bar{y}_{\bullet j}$ (eje $y$) frente a los promedios fila $\bar{y}_{i\bullet}$ (eje $x$), junto con la recta $y=x$ como punto de referencia. ¿Qué se puede concluir?
 
 ## Punto 6
+
 Considere el conjunto de datos dado en `conflict.RData` recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo `conflict.RData` contiene una lista con tres arreglos, `X`, `Y`, y `D`. `X` tiene tres campos: `population` (población en millones), `gdp` (PIB en millones de dolares) `polity` (puntuación política, un índice de democracia). `Y` hace referencia a una matriz $\mathbf{Y}=[y_{i,j}]$ en la que $y_{i,j}$ representa el número de conflictos iniciados por el país $i$ hacia el país $j$. Finalmente, `D`es un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).
 
 **a. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.**
 
 **b. Calcule e interprete la media global.**
 
-**c. Obtenga y grafique la distribución del *out-degree* y del *in-degree*. Calcule e interprete la media y la desviación estándar de esta distribución. **
+**c. Obtenga y grafique la distribución del *out-degree* y del *in-degree*. Calcule e interprete la media y la desviación estándar de esta distribución.**
 
-**d. Calcule el coeficiente de correlación entre los valores del *out-degree* y el *in-degree*. Realice un dispersograma de los grados de entrada (eje $y$) frente a los grados de salida (eje $x$), junto con la recta $y=x$ como punto de referencia. ¿Qué se puede concluir?**
+**d. Calcule el coeficiente de correlación entre los valores del *out-degree* y el *in-degree*. Realice un dispersograma de los grados de entrada (eje** $y$) frente a los grados de salida (eje $x$), junto con la recta $y=x$ como punto de referencia. ¿Qué se puede concluir?
 
 **e. Identifique los países mas activos.**
 
-
 ## Punto 7
+
 Para todos los vértices de los cuatro grafos que se presentan a continuación, calcular el grado y las medidas de centralidad. Para cada grafo completar e interpretar la siguiente tabla. Interpretar los resultados.
 
 ## Punto 8
+
 Considere los datos relacionales acerca de los conflictos internacionales del archivo `conflict.RData` despúes de simetrizarla débilmente y remover los nodos aislados:
+
 ```{r, fig.width=6, fig.height=6}
 # datos
 # load("conflict.RData")
@@ -123,7 +182,5 @@ Considere los datos relacionales acerca de los conflictos internacionales del ar
 **c. Interpretar los resultados**
 
 ## Punto 9
+
 Sintetizar y replicar los Capítulos 6, 8, y 9 de Luke, D. A. (2015).
-
-
-

@@ -267,6 +267,10 @@ Adjuntando el paquete: 'igraph'</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2</code></pre>
 </div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+ℹ Please use the `linewidth` argument instead.</code></pre>
+</div>
 </div>
 <section id="punto-1" class="level2">
 <h2 class="anchored" data-anchor-id="punto-1">Punto 1</h2>
@@ -274,36 +278,36 @@ Adjuntando el paquete: 'igraph'</code></pre>
 d_i^{\text{out}} = \sum_{j:j\neq i} y_{i,j}
 \qquad\text{y}\qquad
 d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
-\]</span> <em>Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces <span class="math inline">\(d_i^{\text{out}} = d_i^{\text{in}}\)</span>.</em></p>
+\]</span> <em>Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces</em> <span class="math inline">\(d_i^{\text{out}} = d_i^{\text{in}}\)</span>.</p>
 </section>
 <section id="punto-2" class="level2">
 <h2 class="anchored" data-anchor-id="punto-2">Punto 2</h2>
 <p>Tanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como <span class="math display">\[
 \bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
 \]</span> donde <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).</p>
-<p><strong>a. Muestre que para relaciones no dirigidas la media global <span class="math inline">\(\bar{y}\)</span> es igual a la media tanto de la parte triangular superior de <span class="math inline">\(\mathbf{Y}\)</span> como de la parte triangular inferior de <span class="math inline">\(\mathbf{Y}\)</span>.</strong></p>
+<p><strong>a. Muestre que para relaciones no dirigidas la media global</strong> <span class="math inline">\(\bar{y}\)</span> es igual a la media tanto de la parte triangular superior de <span class="math inline">\(\mathbf{Y}\)</span> como de la parte triangular inferior de <span class="math inline">\(\mathbf{Y}\)</span>.</p>
 <p><strong>b. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.</strong></p>
-<p><strong>c.&nbsp;Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que <span class="math inline">\((n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}\)</span>. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.</strong></p>
+<p><strong>c.&nbsp;Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que</strong> <span class="math inline">\((n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}\)</span>. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.</p>
 </section>
 <section id="punto-3" class="level2">
 <h2 class="anchored" data-anchor-id="punto-3">Punto 3</h2>
 <p>Considere un grafo estrella de orden <span class="math inline">\(n\)</span> y un grafo círculo de orden <span class="math inline">\(n\)</span>. A continuación se representan ambos grafos para <span class="math inline">\(n=9\)</span>. Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por <span class="math inline">\(n - 1\)</span>.</p>
-<p><strong>a. Muestre que para el grafo círculo de orden <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\)</span>.</strong></p>
-<p><strong>b. Muestre que para el grafo estrella de orden <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\frac{n-1}{n} \rightarrow 2\)</span> cuando <span class="math inline">\(n\rightarrow\infty\)</span>.</strong></p>
+<p><strong>a. Muestre que para el grafo círculo de orden</strong> <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\)</span>.</p>
+<p><strong>b. Muestre que para el grafo estrella de orden</strong> <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\frac{n-1}{n} \rightarrow 2\)</span> cuando <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
 </section>
 <section id="punto-4" class="level2">
 <h2 class="anchored" data-anchor-id="punto-4">Punto 4</h2>
 <p>¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?</p>
-<p><strong>a. <span class="math inline">\(2 - 1 - 6 - 3 - 4\)</span>.</strong></p>
-<p><strong>b. <span class="math inline">\(2 - 1 - 6 - 3 - 4 - 1 - 5\)</span>.</strong></p>
-<p><strong>c.&nbsp;<span class="math inline">\(2 - 1 - 2 - 5 - 1 - 4\)</span>.</strong></p>
+<p><strong>a.</strong> <span class="math inline">\(2 - 1 - 6 - 3 - 4\)</span>.</p>
+<p><strong>b.</strong> <span class="math inline">\(2 - 1 - 6 - 3 - 4 - 1 - 5\)</span>.</p>
+<p><strong>c.</strong> <span class="math inline">\(2 - 1 - 2 - 5 - 1 - 4\)</span>.</p>
 </section>
 <section id="punto-5" class="level2">
 <h2 class="anchored" data-anchor-id="punto-5">Punto 5</h2>
 <p>Considere el conjunto de datos dado en <code>comtrade.RData</code> (este archivo contiene una arreglo de cuatro dimensiones denominado <code>comtrade</code>), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
  [1] "Australia"            "Austria"              "Brazil"              
@@ -328,26 +332,59 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 [[3]]
  [1] "1996" "1997" "1998" "1999" "2000" "2001" "2002" "2003" "2004" "2005"</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(comtrade[<span class="dv">1</span>,<span class="dv">2</span>,,]) <span class="co"># Paises, paises, productos y año</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>a. Calcule el aumento medio global <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</strong></p>
+<p><strong>a. Calcule el aumento medio global</strong> <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- apply(X = comtrade[,,c(5,6),], MARGIN = c(1,2), FUN = mean)</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dim(Y)</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># round(Y[1:5,1:5], 2)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> comtrade[,,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> mean) <span class="co">#Media de años y bienes manufacturados</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(Y)[<span class="dv">1</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which</span>(<span class="fu">is.na</span>(Y))] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#** mean(y) **#</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Y)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03778362</code></pre>
 </div>
-<p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</strong></p>
-<p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</strong></p>
-<p><strong>d.&nbsp;Calcule tanto la media de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la media de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>.</strong></p>
-<p><strong>e. Calcule tanto la DE de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la DE de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</strong></p>
-<p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> y los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Realice un dispersograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span> (eje <span class="math inline">\(y\)</span>) frente a los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</strong></p>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No es quivalente a densidad porque es ponderada (?)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>g5a <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(Y, <span class="at">weighted =</span> T)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ecount</span>(g5a)<span class="sc">/</span>(<span class="fu">vcount</span>(g5a)<span class="sc">*</span>(<span class="fu">vcount</span>(g5a)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(<span class="at">graph =</span> g5a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1</code></pre>
+</div>
+</div>
+<p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mean)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mfila)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mfila, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por fila ("</span>, <span class="fu">bar</span>(y)[i.], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</p>
+<p><strong>d.&nbsp;Calcule tanto la media de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la media de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>.</p>
+<p><strong>e. Calcule tanto la DE de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la DE de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</p>
+<p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> y los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Realice un dispersograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span> (eje <span class="math inline">\(y\)</span>) frente a los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</p>
 </section>
 <section id="punto-6" class="level2">
 <h2 class="anchored" data-anchor-id="punto-6">Punto 6</h2>
 <p>Considere el conjunto de datos dado en <code>conflict.RData</code> recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo <code>conflict.RData</code> contiene una lista con tres arreglos, <code>X</code>, <code>Y</code>, y <code>D</code>. <code>X</code> tiene tres campos: <code>population</code> (población en millones), <code>gdp</code> (PIB en millones de dolares) <code>polity</code> (puntuación política, un índice de democracia). <code>Y</code> hace referencia a una matriz <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> en la que <span class="math inline">\(y_{i,j}\)</span> representa el número de conflictos iniciados por el país <span class="math inline">\(i\)</span> hacia el país <span class="math inline">\(j\)</span>. Finalmente, <code>D</code>es un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).</p>
 <p><strong>a. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.</strong></p>
 <p><strong>b. Calcule e interprete la media global.</strong></p>
-<p><strong>c.&nbsp;Obtenga y grafique la distribución del <em>out-degree</em> y del <em>in-degree</em>. Calcule e interprete la media y la desviación estándar de esta distribución. </strong></p>
-<p><strong>d.&nbsp;Calcule el coeficiente de correlación entre los valores del <em>out-degree</em> y el <em>in-degree</em>. Realice un dispersograma de los grados de entrada (eje <span class="math inline">\(y\)</span>) frente a los grados de salida (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</strong></p>
+<p><strong>c.&nbsp;Obtenga y grafique la distribución del <em>out-degree</em> y del <em>in-degree</em>. Calcule e interprete la media y la desviación estándar de esta distribución.</strong></p>
+<p><strong>d.&nbsp;Calcule el coeficiente de correlación entre los valores del <em>out-degree</em> y el <em>in-degree</em>. Realice un dispersograma de los grados de entrada (eje</strong> <span class="math inline">\(y\)</span>) frente a los grados de salida (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</p>
 <p><strong>e. Identifique los países mas activos.</strong></p>
 </section>
 <section id="punto-7" class="level2">
@@ -358,13 +395,13 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-8">Punto 8</h2>
 <p>Considere los datos relacionales acerca de los conflictos internacionales del archivo <code>conflict.RData</code> despúes de simetrizarla débilmente y remover los nodos aislados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>a. Hacer una visualización de la red.</strong></p>
 <p><strong>b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.</strong></p>
