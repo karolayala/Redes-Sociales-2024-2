@@ -249,29 +249,6 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Adjuntando el paquete: 'igraph'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    decompose, spectrum</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:base':
-
-    union</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at C:/Users/Lenovo/Documents/UNAL/Materias/RedesSociales/Redes Sociales 2024-2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-ℹ Please use the `linewidth` argument instead.</code></pre>
-</div>
-</div>
 <section id="punto-1" class="level2">
 <h2 class="anchored" data-anchor-id="punto-1">Punto 1</h2>
 <p>El grado de un nodo en una red tanto dirigida como no dirigida se puede calcular fácilmente a partir de la matriz de adyacencia <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span>. El <em>out-degree</em> <span class="math inline">\(d_i^{\text{out}}\)</span> y el <em>in-degree</em> <span class="math inline">\(d_i^{\text{in}}\)</span> del nodo <span class="math inline">\(i\)</span> se pueden calcular respectivamente como: <span class="math display">\[
@@ -306,8 +283,8 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-5">Punto 5</h2>
 <p>Considere el conjunto de datos dado en <code>comtrade.RData</code> (este archivo contiene una arreglo de cuatro dimensiones denominado <code>comtrade</code>), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
  [1] "Australia"            "Austria"              "Brazil"              
@@ -332,39 +309,39 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 [[3]]
  [1] "1996" "1997" "1998" "1999" "2000" "2001" "2002" "2003" "2004" "2005"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(comtrade[<span class="dv">1</span>,<span class="dv">2</span>,,]) <span class="co"># Paises, paises, productos y año</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(comtrade[<span class="dv">1</span>,<span class="dv">2</span>,,]) <span class="co"># Paises, paises, productos y año</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>a. Calcule el aumento medio global</strong> <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> comtrade[,,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> mean) <span class="co">#Media de años y bienes manufacturados</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(Y)[<span class="dv">1</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which</span>(<span class="fu">is.na</span>(Y))] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#** mean(y) **#</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Y)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> comtrade[,,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> mean) <span class="co">#Media de años y bienes manufacturados</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(Y)[<span class="dv">1</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which</span>(<span class="fu">is.na</span>(Y))] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#** mean(y) **#</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Y)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.03778362</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No es quivalente a densidad porque es ponderada (?)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>g5a <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(Y, <span class="at">weighted =</span> T)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ecount</span>(g5a)<span class="sc">/</span>(<span class="fu">vcount</span>(g5a)<span class="sc">*</span>(<span class="fu">vcount</span>(g5a)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No es quivalente a densidad porque es ponderada (?)</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>g5a <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(Y, <span class="at">weighted =</span> T)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ecount</span>(g5a)<span class="sc">/</span>(<span class="fu">vcount</span>(g5a)<span class="sc">*</span>(<span class="fu">vcount</span>(g5a)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(<span class="at">graph =</span> g5a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(<span class="at">graph =</span> g5a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
 <p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mean)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mfila)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mfila, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por fila ("</span>, <span class="fu">bar</span>(y)[i.], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mean)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mfila, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 1, FUN = mean))</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mfila, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por fila ("</span>, <span class="fu">bar</span>(y)[i.], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -373,8 +350,46 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 </div>
 </div>
 </div>
+<p>Interpretar:</p>
 <p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> mean)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mcol, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 2, FUN = mean))</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mcol, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por columna ("</span>, <span class="fu">bar</span>(y)[.j], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p><strong>d.&nbsp;Calcule tanto la media de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la media de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">mean</span>(mfila[,<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">x</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0.0365242</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mcol[,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.03652417</code></pre>
+</div>
+</div>
 <p><strong>e. Calcule tanto la DE de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la DE de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</p>
 <p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> y los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Realice un dispersograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span> (eje <span class="math inline">\(y\)</span>) frente a los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</p>
 </section>
@@ -395,13 +410,13 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-8">Punto 8</h2>
 <p>Considere los datos relacionales acerca de los conflictos internacionales del archivo <code>conflict.RData</code> despúes de simetrizarla débilmente y remover los nodos aislados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>a. Hacer una visualización de la red.</strong></p>
 <p><strong>b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.</strong></p>
