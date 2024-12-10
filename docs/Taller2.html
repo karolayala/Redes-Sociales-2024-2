@@ -101,6 +101,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="site_libs/d3-4.5.0/d3.min.js"></script>
+
+<script src="site_libs/forceNetwork-binding-0.4/forceNetwork.js"></script>
+
+<link href="site_libs/vis-9.1.0/vis-network.min.css" rel="stylesheet">
+
+<script src="site_libs/vis-9.1.0/vis-network.min.js"></script>
+
+<script src="site_libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -217,7 +231,11 @@ window.Quarto = {
   <li><a href="#punto-6" id="toc-punto-6" class="nav-link" data-scroll-target="#punto-6">Punto 6</a></li>
   <li><a href="#punto-7" id="toc-punto-7" class="nav-link" data-scroll-target="#punto-7">Punto 7</a></li>
   <li><a href="#punto-8" id="toc-punto-8" class="nav-link" data-scroll-target="#punto-8">Punto 8</a></li>
-  <li><a href="#punto-9" id="toc-punto-9" class="nav-link" data-scroll-target="#punto-9">Punto 9</a></li>
+  <li><a href="#punto-9" id="toc-punto-9" class="nav-link" data-scroll-target="#punto-9">Punto 9</a>
+  <ul class="collapse">
+  <li><a href="#capítulo-6---graficos-avanzados-de-redes" id="toc-capítulo-6---graficos-avanzados-de-redes" class="nav-link" data-scroll-target="#capítulo-6---graficos-avanzados-de-redes">Capítulo 6 - Graficos avanzados de redes</a></li>
+  <li><a href="#capítulo-8---subgrupos" id="toc-capítulo-8---subgrupos" class="nav-link" data-scroll-target="#capítulo-8---subgrupos">Capítulo 8 - Subgrupos</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -255,36 +273,193 @@ window.Quarto = {
 d_i^{\text{out}} = \sum_{j:j\neq i} y_{i,j}
 \qquad\text{y}\qquad
 d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
-\]</span> <em>Muestre que este cálculo funciona tanto para relaciones dirigidas como no dirigidas. Específicamente, muestre que si la red es no dirigida entonces</em> <span class="math inline">\(d_i^{\text{out}} = d_i^{\text{in}}\)</span>.</p>
+\]</span> <strong>Muestre que si la red es no dirigida entonces</strong> <span class="math inline">\(d_i^{\text{out}} = d_i^{\text{in}}\)</span>.</p>
+<p>Si la red no es dirigida, <span class="math inline">\(Y = [y_{ij}]\)</span> es simétrica, así <span class="math inline">\(Y = [y_{ij}] = [y_{ji}] = Y^T\)</span>, entonces:</p>
+<p><span class="math display">\[
+d_i^{\text{out}} = \sum_{j:j \neq i} y_{i,j}= \sum_{j:j \neq i} y_{j,i}  = d_i^{\text{in}}
+\]</span></p>
 </section>
 <section id="punto-2" class="level2">
 <h2 class="anchored" data-anchor-id="punto-2">Punto 2</h2>
 <p>Tanto para redes dirigidas como no dirigidas, se define la media global de las interacciones como <span class="math display">\[
 \bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
 \]</span> donde <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> es la matriz de adyacencia de la red correspondiente. Tal estadístico corresponde a una descripción muy rudimentaria acerca de la plausibilidad de observar una relación entre dos nodos cualesquiera, dado que no tiene en cuenta la heterogeneidad nodal (algunos nodos son más propensos a enviar/recibir más relaciones).</p>
-<p><strong>a. Muestre que para relaciones no dirigidas la media global</strong> <span class="math inline">\(\bar{y}\)</span> es igual a la media tanto de la parte triangular superior de <span class="math inline">\(\mathbf{Y}\)</span> como de la parte triangular inferior de <span class="math inline">\(\mathbf{Y}\)</span>.</p>
+<p><strong>a. Muestre que para relaciones no dirigidas la media global</strong> <span class="math inline">\(\bar{y}\)</span> <strong>es igual a la media tanto de la parte triangular superior de</strong> <span class="math inline">\(\mathbf{Y}\)</span> <strong>como de la parte triangular inferior de</strong> <span class="math inline">\(\mathbf{Y}\)</span>.</p>
+<p>Como la red es no dirigida, <span class="math inline">\(Y = [y_{i,j}] = [y_{j,i}] = Y^T\)</span>, por lo tanto: <span class="math display">\[\sum_{i,j: i &gt; j} y_{i,j} = \sum_{i,j: i &lt; j} y_{i,j}\]</span> Así: <span class="math display">\[
+\bar{y}_{\text{sup}} =  \frac{2}{n(n-1)} \sum_{i,j: i &gt; j} y_{i,j} = \frac{2}{n(n-1)} \sum_{i,j: i &lt; j} y_{i,j} = \bar{y}_{\text{inf}}
+\]</span></p>
+<p>Por otro lado, <span class="math display">\[\sum_{i,j: j \neq i} y_{ij}\]</span> es una suma de 0’s y 1’s sobre toda la matriz <span class="math inline">\(Y\)</span>, entonces <span class="math display">\[
+\frac{1}{2} \sum_{i,j: i \neq j} y_{i,j} =  \sum_{i,j: i &lt; j} y_{i,j} = \sum_{i,j: i &gt; j} y_{j,i}
+\]</span> Luego,</p>
+<p><span class="math display">\[
+\bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j} = \frac{2}{n(n-1)} \sum_{i,j: i &gt; j} y_{i,j} = \frac{2}{n(n-1)} \sum_{i,j: i &lt;j} y_{i,j}
+\]</span></p>
 <p><strong>b. Muestre que tanto para relaciones dirigidas como no dirigidas la media global corresponde a la densidad de la red.</strong></p>
-<p><strong>c.&nbsp;Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que</strong> <span class="math inline">\((n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}\)</span>. Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.</p>
+<p><strong>Redes no dirigidas</strong></p>
+<p>Para un subgrafo <em>H</em>, la densidad se define como <span class="math display">\[
+\text{den}(H) = \frac{|E_H|}{|V_H|(|V_H|-1)/2}
+\]</span> En una red no dirigida, la cantidad de aristas se puede calcular como la suma de la matriz triangular superior o inferior de la matriz de adyacencia <em>Y</em>: <span class="math display">\[
+|E_H| = \sum_{i,j: i&gt;j} y_{i,j}
+\]</span> Por otro lado, <span class="math inline">\(|V_H|\)</span> corresponde a la cantidad de vértices del grafo, que es igual al número de filas (n) o columnas (n) de la matriz de adyacencia.</p>
+<p><span class="math display">\[
+\text{den}(H)  = \frac{2|E_H|}{|V_H|(|V_H|-1)} = \frac{2}{n(n-1)} \sum_{i,j:i&lt;j} y_{i,j}
+\]</span> Que, por el resultado anterior, es igual a: <span class="math display">\[
+\bar{y}=\frac{1}{n(n-1)}\sum_{i,j:i\neq j} y_{i,j}
+\]</span> <strong>Redes dirigidas</strong></p>
+<p>En una red no dirigida, la cantidad de aristas se puede calcular como la suma de la matriz de adyacencia <em>Y</em>: <span class="math display">\[
+\sum_{i,j:i \neq j} y_{ij}
+\]</span> y <span class="math inline">\(|V_H|=n\)</span> como en el caso de una red no dirigida.</p>
+<p>Así: <span class="math display">\[
+\text{den}(H)  = \frac{|E_H|}{|V_H|(|V_H|-1)} = \frac{1}{n(n-1)} \sum_{i,j:i \neq j} y_{i,j} = \bar{y}
+\]</span></p>
+<p><strong>c.&nbsp;Muestre que tanto para relaciones dirigidas como no dirigidas se tiene que</strong> <span class="math inline">\((n-1)\bar{y} = \bar{d}^{\text{out}}=\bar{d}^{\text{in}}\)</span>. <strong>Es decir, el grado promedio tanto de entrada como de salida son iguales y a su vez equivalentes la densidad.</strong></p>
+<p><strong>Redes no dirigidas</strong> <span class="math display">\[
+(n-1)  \bar{y} = (n-1)  \frac{1}{n(n-1)} \sum_{i,j: i \neq j} y_{i,j} = \frac{1}{n} \sum_{i,j: i \neq j} y_{i,j}
+\]</span> <span class="math display">\[
+= \frac{1}{n} \sum_{i=1}^n \sum_{j=j \neq i} y_{i,j} = \frac{1}{n} \sum_{i=1}^n d_i^{\text{out}} = \bar{d}^{\text{out}}
+\]</span> según el resultado del punto 1, en una red no dirigida <span class="math inline">\(d^{in} = d^{out}\)</span>, luego <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n d_i^{\text{out}} = \frac{1}{n} \sum_{i=1}^n d_i^{\text{in}}
+\]</span> <span class="math display">\[
+\bar{d}^{\text{in}} = \bar{d}^{\text{out}}
+\]</span> <strong>Redes dirigidas</strong></p>
+<p><span class="math display">\[
+d_i^{\text{in}} = \sum_{j: j \neq i} y_{j,i}
+\]</span></p>
+<p><span class="math display">\[
+\bar{d}^{\text{in}} =  \frac{1}{n} \sum_{i=1}^n \sum_{j=j \neq i} y_{j, i} =  \frac{1}{n} \sum_{i=1}^n \sum_{j=j \neq i} y_{i, j} = \bar{d}^{\text{out}}
+\]</span> <span class="math inline">\(\bar{d}^{\text{in}}\)</span> se puede entender como una suma por columnas de la matriz de adyacencia sobre <span class="math inline">\(n\)</span> y <span class="math inline">\(\bar{d}^{\text{out}}\)</span> como una suma por filas de la matriz de adyacencia sobre <span class="math inline">\(n\)</span>.</p>
+<p>Por otro lado, <span class="math display">\[
+(n-1)  \bar{y} = (n-1)  \frac{1}{n(n-1)} \sum_{i,j: i \neq j} y_{i,j} = \frac{1}{n} \sum_{i,j: i \neq j} y_{i,j}
+\]</span> <span class="math display">\[
+= \frac{1}{n} \sum_{i=1}^n \sum_{j=j \neq i} y_{i,j} = \frac{1}{n} \sum_{i=1}^n d_i^{\text{out}} = \bar{d}^{\text{out}}  = \bar{d}^{\text{in}}
+\]</span></p>
 </section>
 <section id="punto-3" class="level2">
 <h2 class="anchored" data-anchor-id="punto-3">Punto 3</h2>
 <p>Considere un grafo estrella de orden <span class="math inline">\(n\)</span> y un grafo círculo de orden <span class="math inline">\(n\)</span>. A continuación se representan ambos grafos para <span class="math inline">\(n=9\)</span>. Estos grafos tienen aproximadamente la misma densidad, pero su estructura es muy diferente. Recuerde que la densidad de un grafo se puede calcular como el grado promedio dividido por <span class="math inline">\(n - 1\)</span>.</p>
-<p><strong>a. Muestre que para el grafo círculo de orden</strong> <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\)</span>.</p>
-<p><strong>b. Muestre que para el grafo estrella de orden</strong> <span class="math inline">\(n\)</span> el grado promedio es <span class="math inline">\(\bar{d} = 2\frac{n-1}{n} \rightarrow 2\)</span> cuando <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="star_circle.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%" data-fig-pos="H"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>a. Muestre que para el grafo círculo de orden</strong> <span class="math inline">\(n\)</span> <strong>el grado promedio es</strong> <span class="math inline">\(\bar{d} = 2\)</span>.</p>
+<p>La matriz de adyacencia para un grafo círculo de orden n, sería: <span class="math display">\[
+Y_{n*n} =
+\begin{bmatrix}
+. &amp; 1 &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+1 &amp; . &amp; 1 &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . \\
+. &amp; 1 &amp; . &amp; 1 &amp; . &amp; . &amp; . &amp; . &amp; . \\
+. &amp; . &amp; 1 &amp; . &amp; 1 &amp; . &amp; . &amp; . &amp; . \\
+. &amp; . &amp; . &amp; 1 &amp; . &amp; 1 &amp; . &amp; . &amp; . \\
+. &amp; . &amp; . &amp; . &amp; 1 &amp; . &amp; 1 &amp; . &amp; . \\
+. &amp; . &amp; . &amp; . &amp; . &amp; 1 &amp; . &amp; 1 &amp; . \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 &amp; . &amp; 1 \\
+1 &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 &amp; . \\
+\end{bmatrix}
+\]</span> En un grafo círculo, cada vértice tiene un grado de <span class="math inline">\(2\)</span>. Luego, la suma de todos los grados es: <span class="math display">\[
+\sum_{i,j=i \neq j} y_{i,j} = 2n
+\]</span> El grado promedio es: <span class="math display">\[
+\bar{d} = (n-1) \bar{y} =  (n-1)  \frac{1}{n(n-1)} \sum_{i,j: i \neq j} y_{i,j} = \frac{1}{n} 2n = 2
+\]</span></p>
+<p><strong>b. Muestre que para el grafo estrella de orden <span class="math inline">\(n\)</span> el grado promedio es</strong> <span class="math inline">\(\bar{d} = 2\frac{n-1}{n} \rightarrow 2\)</span> <strong>cuando</strong> <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
+<p>La matriz de adyacencia para un grafo estrella de orden n, sería: <span class="math display">\[
+Y_{n*n} =
+\begin{bmatrix}
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+. &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; . &amp; 1 \\
+1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; 1 &amp; . \\
+\end{bmatrix}
+\]</span> En un grafo estrella, cada vértice tiene una relación con el vértice central <span class="math inline">\(n\)</span>, con excepción del vértice central que tiene <span class="math inline">\(n-1\)</span> relaciones. Esto implica: <span class="math display">\[
+|E| = (n-1) + (n-1) = 2n-2 = 2(n-1) = \sum_{i,j: i \neq j} y_{i,j}
+\]</span> Así, el grado promedio es: <span class="math display">\[
+\bar{d} = (n-1) \bar{y} =  (n-1)  \frac{1}{n(n-1)} \sum_{i,j: i \neq j} y_{i,j} = \frac{2(n-1)}{n}
+\]</span> Cuando <span class="math inline">\({n \to \infty}\)</span>,</p>
+<p><span class="math display">\[\bar{d} = 2\frac{n-1}{n} = 2 \frac{n}{n} \frac{1}{n} = 2 \frac{1}{n} \rightarrow 2\]</span></p>
 </section>
 <section id="punto-4" class="level2">
 <h2 class="anchored" data-anchor-id="punto-4">Punto 4</h2>
 <p>¿Cuáles de las siguientes secuencias son caminatas en el grafo que se presenta a continuación? ¿Cuáles senderos? ¿Cuáles circuitos? ¿Cuáles ciclos?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="wtp.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:25.0%" data-fig-pos="H"></p>
+</figure>
+</div>
+</div>
+</div>
 <p><strong>a.</strong> <span class="math inline">\(2 - 1 - 6 - 3 - 4\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>g4 <span class="ot">&lt;-</span> <span class="fu">graph_from_literal</span>(<span class="dv">1-2</span>,<span class="dv">1-5</span>,<span class="dv">6-1</span>,<span class="dv">4-1</span>,<span class="dv">2-5</span>,<span class="dv">3-4</span>,<span class="dv">3-6</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Secuencia 2−1−6−3−4</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>V_cam1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>E_cam1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"1-6"</span>, <span class="st">"3-6"</span>, <span class="st">"3-4"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g4)<span class="sc">$</span>name <span class="sc">%in%</span> V_cam1, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">apply</span>(<span class="fu">ends</span>(g4, <span class="fu">E</span>(g4)), <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">paste</span>(<span class="fu">sort</span>(x), <span class="at">collapse=</span><span class="st">"-"</span>)) <span class="sc">%in%</span> E_cam1, <span class="st">"red"</span>, <span class="st">"gray"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3312</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g4, <span class="at">edge.arrow.size=</span><span class="dv">1</span>, <span class="at">vertex.size=</span><span class="dv">20</span>, <span class="at">vertex.label.cex=</span><span class="dv">1</span>, <span class="at">main=</span><span class="st">"Secuencia 2−1−6−3−4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Esta secuencia es un sendero, ya que es una caminata abierta que no tiene vertices ni aristas repetidas.</p>
 <p><strong>b.</strong> <span class="math inline">\(2 - 1 - 6 - 3 - 4 - 1 - 5\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Secuencia 2 - 1 - 6 - 3 - 4 - 1 - 5</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>V_cam2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>E_cam2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"1-6"</span>, <span class="st">"1-4"</span>, <span class="st">"1-5"</span>, <span class="st">"3-6"</span>, <span class="st">"3-4"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g4)<span class="sc">$</span>name <span class="sc">%in%</span> V_cam2, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">apply</span>(<span class="fu">ends</span>(g4, <span class="fu">E</span>(g4)), <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">paste</span>(<span class="fu">sort</span>(x), <span class="at">collapse=</span><span class="st">"-"</span>)) <span class="sc">%in%</span> E_cam2, <span class="st">"red"</span>, <span class="st">"gray"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3312</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g4, <span class="at">edge.arrow.size=</span><span class="dv">1</span>, <span class="at">vertex.size=</span><span class="dv">20</span>, <span class="at">vertex.label.cex=</span><span class="dv">1</span>, <span class="at">main=</span><span class="st">"Secuencia 2-1-6-3-4-1-5"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Esta secuencia es un sendero, ya que es una caminata abierta que tiene vertices repetidos, pero no aristas repetidas.</p>
 <p><strong>c.</strong> <span class="math inline">\(2 - 1 - 2 - 5 - 1 - 4\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Secuencia 2 - 1 - 2 - 5 - 1 - 4</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>V_cam3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>E_cam3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"1-2"</span>, <span class="st">"2-1"</span>, <span class="st">"1-4"</span>, <span class="st">"1-5"</span>, <span class="st">"2-5"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">V</span>(g4)<span class="sc">$</span>name <span class="sc">%in%</span> V_cam3, <span class="st">"red"</span>, <span class="st">"white"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">E</span>(g4)<span class="sc">$</span>color <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">apply</span>(<span class="fu">ends</span>(g4, <span class="fu">E</span>(g4)), <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">paste</span>(<span class="fu">sort</span>(x), <span class="at">collapse=</span><span class="st">"-"</span>)) <span class="sc">%in%</span> E_cam3, <span class="st">"red"</span>, <span class="st">"gray"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3312</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g4, <span class="at">edge.arrow.size=</span><span class="dv">1</span>, <span class="at">vertex.size=</span><span class="dv">20</span>, <span class="at">vertex.label.cex=</span><span class="dv">1</span>, <span class="at">main=</span><span class="st">"Secuencia 2-1-2-5-1-4"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Esta secuencia es una caminata abierta que tiene vertices y aristas repetidas.</p>
 </section>
 <section id="punto-5" class="level2">
 <h2 class="anchored" data-anchor-id="punto-5">Punto 5</h2>
 <p>Considere el conjunto de datos dado en <code>comtrade.RData</code> (este archivo contiene una arreglo de cuatro dimensiones denominado <code>comtrade</code>), asociado con el crecimiento anual del comercio (diferencia en dólares en escala logarítmica respecto al año 2000). Este conjunto de datos involucra 30 países, 10 años desde 1996 hasta 2005, y 6 clases de productos diferentes, como se muestra a continuación:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"comtrade.RData"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dimnames</span>(comtrade)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
  [1] "Australia"            "Austria"              "Brazil"              
@@ -309,97 +484,194 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 [[3]]
  [1] "1996" "1997" "1998" "1999" "2000" "2001" "2002" "2003" "2004" "2005"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(comtrade[<span class="dv">1</span>,<span class="dv">2</span>,,]) <span class="co"># Paises, paises, productos y año</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#View(comtrade[1,2,,]) # Paises, paises, productos y año</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>a. Calcule el aumento medio global</strong> <span class="math inline">\(\bar{y}\)</span> a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</p>
+<p><strong>a. Calcule el aumento medio global</strong> <span class="math inline">\(\bar{y}\)</span> <strong>a lo largo de los 10 años en bienes manufacturados. Para ello considere la matriz de adyacencia <code>Y</code> dada por:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> comtrade[,,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> mean) <span class="co">#Media de años y bienes manufacturados</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(Y)[<span class="dv">1</span>]</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which</span>(<span class="fu">is.na</span>(Y))] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#** mean(y) **#</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(Y)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="dv">-1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> comtrade[,,<span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">6</span>),], <span class="at">MARGIN =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">FUN =</span> mean) <span class="co">#Media de años y bienes manufacturados</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">dim</span>(Y)[<span class="dv">1</span>]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Y[<span class="fu">which</span>(<span class="fu">is.na</span>(Y))] <span class="ot">&lt;-</span> <span class="dv">0</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#** mean(y) **#</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">sum</span>(Y)<span class="sc">/</span>(n<span class="sc">*</span>(n<span class="dv">-1</span>)),<span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.03778362</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># No es quivalente a densidad porque es ponderada (?)</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>g5a <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(Y, <span class="at">weighted =</span> T)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ecount</span>(g5a)<span class="sc">/</span>(<span class="fu">vcount</span>(g5a)<span class="sc">*</span>(<span class="fu">vcount</span>(g5a)<span class="sc">-</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(<span class="at">graph =</span> g5a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
+<pre><code>[1] 0.0378</code></pre>
 </div>
 </div>
-<p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</p>
+<p><strong>b. Calcule la media de todas las observaciones de cada fila de <code>Y</code>, es decir, calcule la media fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}=\frac{1}{n-1}\sum_{j:j\neq i} y_{i,j}\)</span> <strong>para cada país. Realice una histograma de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span>. <strong>Los promedios fila caracterizan diferentes niveles de actividad de los nodos en términos de la sociabilidad. ¿Cómo se pueden interpretar los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span>?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mean)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mfila, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 1, FUN = mean))</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mfila, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por fila ("</span>, <span class="fu">bar</span>(y)[i.], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">FUN =</span> mean)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>mfila <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Fila =</span> mfila, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 1, FUN = mean))</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mfila, <span class="fu">aes</span>(<span class="at">x =</span> Fila)) <span class="sc">+</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">fill=</span><span class="st">"purple"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por fila ("</span>, <span class="fu">bar</span>(y)[i.], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Los promedios fila indican cuánto aumenta o disminuye, en promedio, el comercio saliente (exportaciones) de bienes manufacturados del país <span class="math inline">\(i\)</span> hacia los demás países en comparación con el año 2000. De acuerdo al histograma, la mayoría de los paises, en promedio, aumentaron su comercio saliente a menos de 0.05 con respecto al 2000. Por otro lado, un país tuvo un comercio saliente promedio superior al de los demás países, lo que lo posiciona como el mayor exportador en los años de evaluación.</p>
+<p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> <strong>para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedios columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> mean)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Col =</span> mcol, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 2, FUN = mean))</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mcol, <span class="fu">aes</span>(<span class="at">x =</span> Col)) <span class="sc">+</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">fill=</span><span class="st">"purple"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por columna ("</span>, <span class="fu">bar</span>(y)[.j], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Taller2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Taller2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Interpretar:</p>
-<p><strong>c.&nbsp;Calcule la media de todas las observaciones de cada columna de <code>Y</code>, es decir, calcule la media columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}=\frac{1}{n-1}\sum_{i:i\neq j} y_{i,j}\)</span> para cada país. Realice una histograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Los promedios columna caracterizan diferentes niveles de actividad de los nodos en términos de la popularidad. ¿Cómo se pueden interpretar los promedio columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>?</p>
+<p>Los promedios columna indican cuánto aumenta o disminuye, en promedio, el comercio entrante (importaciones) de bienes manufacturados hacia un país <span class="math inline">\(i\)</span> desde los demás países en comparación con el año 2000. De acuerdo al histograma, algunos países, en promedio, disminuyeron su comercio entrante con respecto al 2000. Mientras que algunos pocos aumentaron sus importaciones a mas del 0.10 con el respecto al año 2000, lo que los posiciona como los mayores importadores en los años de evaluación.</p>
+<p><strong>d.&nbsp;Calcule tanto la media de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> <strong>como la media de los promedios columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. <strong>Qué se puede concluir acerca de la tendencia local en este caso?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">apply</span>(Y, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> mean)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>mcol <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Pais =</span> mcol, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(apply(Y, MARGIN = 2, FUN = mean))</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mcol, <span class="fu">aes</span>(<span class="at">x =</span> Pais)) <span class="sc">+</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"identity"</span>, <span class="at">bins =</span> <span class="dv">7</span>, <span class="at">fill=</span><span class="st">"blue"</span>, <span class="at">colour =</span> <span class="st">"black"</span>,<span class="at">lwd =</span> <span class="fl">0.1</span>,<span class="at">linetype =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">title=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">"Media de observaciones por columna ("</span>, <span class="fu">bar</span>(y)[.j], <span class="st">")"</span>)), <span class="at">x=</span><span class="st">"Media de crecimiento anual en bienes manufacturados"</span>, <span class="at">y=</span><span class="st">"Frecuencia"</span>) <span class="sc">+</span> mitema <span class="sc">+</span> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">strip.background=</span><span class="fu">element_rect</span>(<span class="at">color=</span><span class="st">"black"</span>,<span class="at">fill=</span><span class="st">"gray80"</span>,<span class="at">size=</span><span class="dv">1</span>), <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>,<span class="at">size=</span><span class="dv">15</span>,<span class="at">vjust=</span><span class="fl">0.5</span>,<span class="at">hjust=</span><span class="fl">0.5</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">angle=</span><span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Taller2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>d.&nbsp;Calcule tanto la media de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la media de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">mean</span>(mfila[,<span class="dv">1</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>meand <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">round</span>(<span class="fu">mean</span>(mfila[,<span class="dv">1</span>]), <span class="dv">4</span>), <span class="fu">round</span>(<span class="fu">mean</span>(mcol[,<span class="dv">1</span>]), <span class="dv">4</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(meand) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Media promedios fila"</span>, <span class="st">"Media promedios columna"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(meand) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(meand, <span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: right;">x</th>
+<th style="text-align: center;">Media promedios fila</th>
+<th style="text-align: center;">Media promedios columna</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">0.0365242</td>
+<td style="text-align: center;">0.0365</td>
+<td style="text-align: center;">0.0365</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mcol[,<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La media de los promedios fila y de los promedios columna es igual por como están definidas las medidas. Su valor es de 0.0365, el cual es cercano a 0, lo que indica que hubo un leve nivel de crecimiento económico tanto saliente como entrante de bienes manufacturados en comparación con el año 2000, en la red.</p>
+<p><strong>e. Calcule tanto la DE de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> <strong>como la DE de los promedios columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. <strong>¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sde <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="fu">round</span>(<span class="fu">sd</span>(mfila[,<span class="dv">1</span>]), <span class="dv">4</span>), <span class="fu">round</span>(<span class="fu">sd</span>(mcol[,<span class="dv">1</span>]), <span class="dv">4</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sde) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DE promedios fila"</span>, <span class="st">"DE promedios columna"</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(sde) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(sde, <span class="at">align =</span> <span class="st">"c"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">DE promedios fila</th>
+<th style="text-align: center;">DE promedios columna</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.0292</td>
+<td style="text-align: center;">0.0396</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>La desviación estándar de los promedios fila es inferior a la desviación estándar de los promedios columna, lo que indica que hay mayor heterogeneidad entre los niveles de importación de cada país que entre los de exportación. Así, en cuanto al nivel de exportación, el comercio saliente de los países dista, en promedio, 0.0292 de la media, mientras que el comercio entrante de los países dista, en promedio, 0.0396 de la media.</p>
+<p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> <strong>y los promedios columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. <strong>Realice un dispersograma de los promedios columna</strong> <span class="math inline">\(\bar{y}_{\bullet j}\)</span> <strong>(eje</strong> <span class="math inline">\(y\)</span><strong>) frente a los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> <strong>(eje</strong> <span class="math inline">\(x\)</span><strong>), junto con la recta</strong> <span class="math inline">\(y=x\)</span> <strong>como punto de referencia. ¿Qué se puede concluir?</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>tabf <span class="ot">&lt;-</span> <span class="fu">cbind</span>(mfila, mcol)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de correlacion</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Coeficiente de correlación:"</span>, <span class="fu">round</span>(<span class="fu">cor</span>(tabf)[<span class="dv">1</span>,<span class="dv">2</span>], <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.03652417</code></pre>
+<pre><code>Coeficiente de correlación: 0.7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Grafico</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tabf,<span class="fu">aes</span>(<span class="at">x=</span>Fila,<span class="at">y=</span>Col)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"red"</span>,<span class="at">shape=</span><span class="dv">16</span>,<span class="at">size=</span><span class="fl">2.5</span>)<span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">formula=</span>y <span class="sc">~</span> <span class="fu">poly</span>(x,<span class="at">degree=</span><span class="dv">1</span>),<span class="at">se=</span><span class="cn">FALSE</span>,<span class="at">size=</span><span class="dv">1</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">linetype=</span><span class="st">"solid"</span>,<span class="at">color=</span><span class="st">"blue"</span>)<span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Promedios fila versus promedios columna"</span>,<span class="at">x=</span><span class="st">"Promedios exportaciones"</span>,<span class="at">y=</span><span class="st">"Promedios importaciones"</span>) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a> mitema</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
 </div>
-<p><strong>e. Calcule tanto la DE de los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> como la DE de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. ¿Qué se puede concluir acerca de la heterogeneidad local en este caso?</p>
-<p><strong>f.&nbsp;Calcule el coeficiente de correlación entre los promedios fila</strong> <span class="math inline">\(\bar{y}_{i\bullet}\)</span> y los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span>. Realice un dispersograma de los promedios columna <span class="math inline">\(\bar{y}_{\bullet j}\)</span> (eje <span class="math inline">\(y\)</span>) frente a los promedios fila <span class="math inline">\(\bar{y}_{i\bullet}\)</span> (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</p>
+</div>
+<p>El coeficiente de correlación lineal entre los promedios fila y los promedios columna es de 0.7, lo que indica que hay una relación lineal alta. Así, si el promedio de exportaciones de un país <span class="math inline">\(i\)</span> es alto, su promedio de importaciones también lo será. Por otro lado, según el dispersograma, el promedio de las exportaciones y de las importaciones en los países tiende a mantener una magnitud y signo similar que puede ser representada por la recta <span class="math inline">\(x=y\)</span>, por supuesto, con la presencia de ciertos países que parecen no seguir dicha relación.</p>
 </section>
 <section id="punto-6" class="level2">
 <h2 class="anchored" data-anchor-id="punto-6">Punto 6</h2>
 <p>Considere el conjunto de datos dado en <code>conflict.RData</code> recopilado por Mike Ward y Xun Cao del departamento de Ciencias Políticas de la Universidad de Washington, asociado con datos de conflictos entre países en los años 90. El archivo <code>conflict.RData</code> contiene una lista con tres arreglos, <code>X</code>, <code>Y</code>, y <code>D</code>. <code>X</code> tiene tres campos: <code>population</code> (población en millones), <code>gdp</code> (PIB en millones de dolares) <code>polity</code> (puntuación política, un índice de democracia). <code>Y</code> hace referencia a una matriz <span class="math inline">\(\mathbf{Y}=[y_{i,j}]\)</span> en la que <span class="math inline">\(y_{i,j}\)</span> representa el número de conflictos iniciados por el país <span class="math inline">\(i\)</span> hacia el país <span class="math inline">\(j\)</span>. Finalmente, <code>D</code>es un arreglo de tres dimensiones dimensiones cuya tercera dimensión contiene indices entre cada par de países asociados con: comercio (dimensión 1), importaciones (dimensión 2), organizaciones intergubernamentales (dimensión 3), y distancia geográfica (dimensión 4).</p>
 <p><strong>a. Hacer una visualización decorada de la red de conflictos teniendo en cuenta diferentes diseños.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"conflict.RData"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>g6 <span class="ot">&lt;-</span> <span class="fu">graph_from_adjacency_matrix</span>(dat<span class="sc">$</span>Y, <span class="at">mode =</span> <span class="st">"directed"</span>, <span class="at">weighted =</span> <span class="cn">TRUE</span>, <span class="at">diag =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Asignar nombres a los vértices del g6</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g6)<span class="sc">$</span>name <span class="ot">&lt;-</span> <span class="fu">rownames</span>(dat<span class="sc">$</span>X)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar el g6 sin decorar</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g6, <span class="at">vertex.label=</span><span class="cn">NA</span>, </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.size=</span><span class="dv">10</span>, <span class="at">vertex.color=</span><span class="st">"lightblue"</span>, <span class="at">edge.arrow.size=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Layout </span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1208</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span><span class="fu">layout_as_star</span>(g6)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>c<span class="ot">&lt;-</span><span class="fu">layout_as_tree</span>(g6)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>d<span class="ot">&lt;-</span><span class="fu">layout_in_circle</span>(g6)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>e<span class="ot">&lt;-</span><span class="fu">layout_nicely</span>(g6)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>f<span class="ot">&lt;-</span><span class="fu">layout_on_grid</span>(g6)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>g<span class="ot">&lt;-</span><span class="fu">layout_on_sphere</span>(g6)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>i<span class="ot">&lt;-</span><span class="fu">layout_with_dh</span>(g6)</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>j<span class="ot">&lt;-</span><span class="fu">layout_with_fr</span>(g6)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>k<span class="ot">&lt;-</span><span class="fu">layout_with_gem</span>(g6)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>l<span class="ot">&lt;-</span><span class="fu">layout_with_graphopt</span>(g6)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>m<span class="ot">&lt;-</span><span class="fu">layout_with_kk</span>(g6)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">layout_with_lgl</span>(g6)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>o<span class="ot">&lt;-</span><span class="fu">layout_with_mds</span>(g6)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>p<span class="ot">&lt;-</span><span class="fu">layout_with_sugiyama</span>(g6)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="do">####################################################################################################</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Aca dice que hay que probar varios diseños, asi que ustedes escogen los que quieran</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="do">####################################################################################################</span></span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando el grado</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g6, <span class="at">layout =</span> j, <span class="at">vertex.size =</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">sqrt</span>(igraph<span class="sc">::</span><span class="fu">degree</span>(g6)), <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">adjustcolor</span>(<span class="st">"royalblue"</span>, <span class="fl">0.2</span>), <span class="at">vertex.frame.color =</span> <span class="st">"royalblue"</span>,</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="fu">adjustcolor</span>(<span class="st">"gray"</span>, <span class="fl">0.4</span>), <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>)  </span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">sub =</span> <span class="st">"Grado"</span>, <span class="at">line =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando la fuerza</span></span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g6, <span class="at">layout =</span> j, <span class="at">vertex.size =</span> <span class="dv">3</span><span class="sc">*</span> <span class="fu">sqrt</span>(<span class="fu">strength</span>(g6, <span class="at">weights =</span> <span class="cn">NA</span>)), <span class="at">vertex.label =</span> <span class="cn">NA</span>,</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.color =</span> <span class="fu">adjustcolor</span>(<span class="st">"royalblue"</span>, <span class="fl">0.2</span>), <span class="at">vertex.frame.color =</span> <span class="st">"royalblue"</span>,</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>     <span class="at">edge.color =</span> <span class="fu">adjustcolor</span>(<span class="st">"gray"</span>, <span class="fl">0.4</span>), <span class="at">edge.arrow.size =</span> <span class="fl">0.5</span>) </span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">sub =</span> <span class="st">"Fuerza"</span>, <span class="at">line =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main =</span> <span class="st">"Red de Conflictos"</span>, <span class="at">outer =</span> <span class="cn">TRUE</span>, <span class="at">line =</span> <span class="sc">-</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p><strong>b. Calcule e interprete la media global.</strong></p>
 <p><strong>c.&nbsp;Obtenga y grafique la distribución del <em>out-degree</em> y del <em>in-degree</em>. Calcule e interprete la media y la desviación estándar de esta distribución.</strong></p>
-<p><strong>d.&nbsp;Calcule el coeficiente de correlación entre los valores del <em>out-degree</em> y el <em>in-degree</em>. Realice un dispersograma de los grados de entrada (eje</strong> <span class="math inline">\(y\)</span>) frente a los grados de salida (eje <span class="math inline">\(x\)</span>), junto con la recta <span class="math inline">\(y=x\)</span> como punto de referencia. ¿Qué se puede concluir?</p>
+<p><strong>d.&nbsp;Calcule el coeficiente de correlación entre los valores del <em>out-degree</em> y el <em>in-degree</em>. Realice un dispersograma de los grados de entrada (eje</strong> <span class="math inline">\(y\)</span><strong>) frente a los grados de salida (eje</strong><span class="math inline">\(x\)</span><strong>), junto con la recta</strong> <span class="math inline">\(y=x\)</span> <strong>como punto de referencia. ¿Qué se puede concluir?</strong></p>
 <p><strong>e. Identifique los países mas activos.</strong></p>
 </section>
 <section id="punto-7" class="level2">
@@ -410,13 +682,13 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <h2 class="anchored" data-anchor-id="punto-8">Punto 8</h2>
 <p>Considere los datos relacionales acerca de los conflictos internacionales del archivo <code>conflict.RData</code> despúes de simetrizarla débilmente y remover los nodos aislados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># datos</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># load("conflict.RData")</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- dat$Y</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # remover nodos aislados</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- 1*( Y*t(Y) &gt; 0 )</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># deg &lt;- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Y &lt;- Y[deg &gt; 0, deg &gt; 0]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><strong>a. Hacer una visualización de la red.</strong></p>
 <p><strong>b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.</strong></p>
@@ -425,8 +697,842 @@ d_i^{\text{in}} = \sum_{j:j\neq i} y_{j,i}
 <section id="punto-9" class="level2">
 <h2 class="anchored" data-anchor-id="punto-9">Punto 9</h2>
 <p>Sintetizar y replicar los Capítulos 6, 8, y 9 de Luke, D. A. (2015).</p>
+<section id="capítulo-6---graficos-avanzados-de-redes" class="level3">
+<h3 class="anchored" data-anchor-id="capítulo-6---graficos-avanzados-de-redes">Capítulo 6 - Graficos avanzados de redes</h3>
+<p>Aunque los paquetes statnet e igraph ofrecen funcionalidades avanzadas para la representación de redes, no siempre cumplen con todos los requerimientos analíticos o de presentación. En muchos casos, los investigadores en el campo de las redes necesitan visualizaciones más especializadas y dinámicas.</p>
+<p><strong>Gráficos Interactivos de Redes</strong></p>
+<p>Diversos paquetes para el análisis de redes, como UCINet y Pajek, facilitan la creación de gráficos interactivos. Aunque R proporciona un control preciso sobre las visualizaciones, no siempre incluye funcionalidades interactivas de forma nativa. Por lo que se presentan alternativas para generar gráficos interactivos en R y publicarlos en la web.</p>
+<p><strong>Redes interactivas simples con tkplot() en igraph</strong></p>
+<p>El paquete igraph incluye la función tkplot() para gráficos interactivos simples. Se usa para ajustar las posiciones de los nodos y luego producir un gráfico final no interactivo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Bali)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>iBali <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(Bali)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>Coord <span class="ot">&lt;-</span> <span class="fu">tkplot</span>(iBali, <span class="at">vertex.size=</span><span class="dv">3</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">vertex.color=</span><span class="st">"darkgreen"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Editar el gráfico en la ventana gráfica Tk antes</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># de ejecutar los siguientes dos comandos.</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>MCoords <span class="ot">&lt;-</span> <span class="fu">tk_coords</span>(Coord)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iBali, <span class="at">layout=</span>MCoords, <span class="at">vertex.size=</span><span class="dv">5</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">vertex.label=</span><span class="cn">NA</span>, <span class="at">vertex.color=</span><span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Publicación de diagramas interactivos de redes basados en Web</strong></p>
+<p>Se están implementando métodos para desarrollar gráficos interactivos basados en la web utilizando frameworks como D3.js y Shiny. El paquete networkD3 permite crear visualizaciones interactivas simples que pueden integrarse en documentos de Shiny o páginas HTML. Por otro lado, el paquete visNetwork, basado en la biblioteca vis.js, proporciona mayores posibilidades de personalización en la apariencia y facilita la incorporación de gráficos en aplicaciones web desarrolladas con Shiny.</p>
+<p>La función <em>simpleNetwork()</em> espera los datos de la red en forma de una lista de aristas almacenada en un data.frame.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(networkD3)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>src <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"B"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>net_edge <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(src, target)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">simpleNetwork</span>(net_edge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="forceNetwork html-widget html-fill-item" id="htmlwidget-1b4ff99564eb6e8884a5" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-1b4ff99564eb6e8884a5">{"x":{"links":{"source":[0,0,1,1,2,1],"target":[1,2,2,3,1,2],"value":[1,1,1,1,1,1],"colour":["#666","#666","#666","#666","#666","#666"]},"nodes":{"name":["A","B","C","D"],"group":[1,1,1,1],"nodesize":[8,8,8,8]},"options":{"NodeID":"name","Group":"group","colourScale":"d3.scaleOrdinal(['#3182bd'])","fontSize":7,"fontFamily":"serif","clickTextSize":17.5,"linkDistance":50,"linkWidth":"'1.5px'.toString()","charge":-30,"opacity":0.6,"zoom":false,"legend":false,"arrows":false,"nodesize":true,"radiusCalculation":"d.nodesize","bounded":false,"opacityNoHover":1,"clickAction":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Para guardar la visualización:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>net_D3 <span class="ot">&lt;-</span> <span class="fu">simpleNetwork</span>(net_edge)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># saveNetwork(net_D3, file = 'Net_test1.html', selfcontained=TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La función <em>forceNetwork()</em> produce graficos más sofisticados.</p>
+<p>Se le deben pasar los datos en dos data.frames:</p>
+<ul>
+<li><p>El data.frame de las aristas tendrá los datos de red en formato de matriz de aristas.</p></li>
+<li><p>El data.frame de los nodos tendrá el ID de nodo y las propiedades de los nodos. Si los nodos tienen identificadores numéricos, deben comenzar en 0.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>iBali_edge <span class="ot">&lt;-</span> <span class="fu">as_edgelist</span>(iBali)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>iBali_edge <span class="ot">&lt;-</span> iBali_edge <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>iBali_edge <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(iBali_edge)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>iBali_nodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">NodeID=</span><span class="fu">as.numeric</span>(<span class="fu">V</span>(iBali)<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Group=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">Nodesize=</span>igraph<span class="sc">::</span><span class="fu">degree</span>(iBali))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">forceNetwork</span>(<span class="at">Links =</span> iBali_edge, <span class="at">Nodes =</span> iBali_nodes,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">Source =</span> <span class="st">"X1"</span>, <span class="at">Target =</span> <span class="st">"X2"</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">NodeID =</span> <span class="st">"NodeID"</span>, <span class="at">Nodesize =</span> <span class="st">"Nodesize"</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">radiusCalculation=</span><span class="st">"Math.sqrt(d.nodesize)*3"</span>,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">Group =</span> <span class="st">"Group"</span>, <span class="at">opacity =</span> <span class="fl">0.8</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">legend=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="forceNetwork html-widget html-fill-item" id="htmlwidget-8f836166d559454ecd73" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-8f836166d559454ecd73">{"x":{"links":{"source":[0,0,0,0,0,0,0,0,0,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,7,7,7,7,8,8,8,9,9,9,9,10,10,10,11,11,12,14,14,15],"target":[1,2,3,4,5,7,8,14,16,3,5,6,3,4,5,7,8,14,15,16,4,5,6,7,8,9,10,11,12,13,14,16,5,7,8,14,15,16,6,7,8,14,16,8,14,15,16,14,15,16,10,11,12,13,11,12,13,12,13,13,15,16,16],"colour":["#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666","#666"]},"nodes":{"name":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],"group":["CT","OA","OA","CT","BM","CT","OA","BM","BM","SB","TL","TL","TL","TL","BM","SB","BM"],"nodesize":[9,4,9,15,9,10,3,9,9,5,5,5,5,5,9,6,9]},"options":{"NodeID":"NodeID","Group":"Group","colourScale":"d3.scaleOrdinal(d3.schemeCategory20);","fontSize":7,"fontFamily":"serif","clickTextSize":17.5,"linkDistance":50,"linkWidth":"function(d) { return Math.sqrt(d.value); }","charge":-30,"opacity":0.8,"zoom":false,"legend":true,"arrows":false,"nodesize":true,"radiusCalculation":"Math.sqrt(d.nodesize)*3","bounded":false,"opacityNoHover":0,"clickAction":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Para guardar el gráfico:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>net_D3 <span class="ot">&lt;-</span> <span class="fu">forceNetwork</span>(<span class="at">Links =</span> iBali_edge,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Nodes =</span> iBali_nodes,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Source =</span> <span class="st">"X1"</span>, <span class="at">Target =</span> <span class="st">"X2"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>                       <span class="at">NodeID =</span> <span class="st">"NodeID"</span>,<span class="at">Nodesize =</span> <span class="st">"Nodesize"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">radiusCalculation=</span><span class="st">"Math.sqrt(d.Nodesize)*3"</span>,</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">Group =</span> <span class="st">"Group"</span>, <span class="at">opacity =</span> <span class="fl">0.8</span>,</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">legend=</span><span class="cn">TRUE</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># saveNetwork(net_D3, file = 'Net_test2.html', selfcontained=TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Usando la función <em>vis.js</em> de la libreria javascript.</p>
+<p>Se le deben pasar los datos en dos data.frames:</p>
+<ul>
+<li><p>El data.frame de las aristas tendrá los datos de red en columnas <em>from</em> y <em>to</em>.</p></li>
+<li><p>El data.frame de los nodos tendrá el ID de nodo y las propiedades de los nodos.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(visNetwork)</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>iBali_edge <span class="ot">&lt;-</span> <span class="fu">as_edgelist</span>(iBali)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>iBali_edge <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">from =</span> iBali_edge[,<span class="dv">1</span>],</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">to =</span> iBali_edge[,<span class="dv">2</span>])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>iBali_nodes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> <span class="fu">as.numeric</span>(<span class="fu">V</span>(iBali)))</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="fu">visNetwork</span>(iBali_nodes, iBali_edge, <span class="at">width =</span> <span class="st">"100%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-0d7db73d03839427d3b7" style="width:100%;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0d7db73d03839427d3b7">{"x":{"nodes":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17]},"edges":{"from":[1,1,1,1,1,1,1,1,1,2,2,2,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,8,8,8,8,9,9,9,10,10,10,10,11,11,11,12,12,13,15,15,16],"to":[2,3,4,5,6,8,9,15,17,4,6,7,4,5,6,8,9,15,16,17,5,6,7,8,9,10,11,12,13,14,15,17,6,8,9,15,16,17,7,8,9,15,17,9,15,16,17,15,16,17,11,12,13,14,12,13,14,13,14,14,16,17,17]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false}},"groups":null,"width":"100%","height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Algunas opciones de la libreria son:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>iBali_nodes<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">V</span>(iBali)<span class="sc">$</span>role</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>iBali_nodes<span class="sc">$</span>value <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">degree</span>(iBali)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">visNetwork</span>( iBali_nodes, iBali_edge,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">legend.width=</span><span class="cn">TRUE</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">visOptions</span>(net, <span class="at">highlightNearest =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-c2e3fede5c798441fdae" style="width:100%;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c2e3fede5c798441fdae">{"x":{"nodes":{"id":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"group":["CT","OA","OA","CT","BM","CT","OA","BM","BM","SB","TL","TL","TL","TL","BM","SB","BM"],"value":[9,4,9,15,9,10,3,9,9,5,5,5,5,5,9,6,9],"label":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17"]},"edges":{"from":[1,1,1,1,1,1,1,1,1,2,2,2,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,8,8,8,8,9,9,9,10,10,10,10,11,11,11,12,12,13,15,15,16],"to":[2,3,4,5,6,8,9,15,17,4,6,7,4,5,6,8,9,15,16,17,5,6,7,8,9,10,11,12,13,14,15,17,6,8,9,15,16,17,7,8,9,15,17,9,15,16,17,15,16,17,11,12,13,14,12,13,14,13,14,14,16,17,17]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false}},"groups":["CT","OA","BM","SB","TL"],"width":"100%","height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":true,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":false,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Las funciones <em>visNetwork()</em> y <em>visOptions()</em> establecen colores predeterminados para cada grupo y permiten que el usuario resalte los nodos individuales y sus vecinos inmediatos al hacer clic en un nodo.</p>
+<p>En el ejemplo se agregan botones de navegación que permiten mover la red y acercar o alejar.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">visNetwork</span>(iBali_nodes, iBali_edge,</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">legend=</span><span class="cn">TRUE</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">visOptions</span>(net, <span class="at">highlightNearest =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>net <span class="ot">&lt;-</span> <span class="fu">visInteraction</span>(net, <span class="at">navigationButtons =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">#library(htmlwidgets)</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="co">#saveWidget(net, "Net_test3.html")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Statnet Web: Statnet Interactivo con Shiny</strong></p>
+<p>Statnet Web es una aplicación web, basada en las herramientas de análisis de redes de Statnet utilizando Shiny.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(statnetWeb)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#run_sw()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Diagramas de redes especializados</strong></p>
+<p>Existen técnicas especializadas para resaltar aspectos importantes de las redes, como diagramas de arco, diagramas de acordes y mapas de calor.</p>
+<p><strong>Diagramas de Arco</strong></p>
+<p>Los diagramas de arco se enfocan en el patrón de los enlaces más que en la posición de los nodos. Uso del paquete <em>arcdiagram</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">#library(devtools)</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co">#remotes::install_github("gastonstat/arcdiagram")</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co">#library(arcdiagram)</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(UserNetR)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Simpsons)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>iSimp <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(Simpsons)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>simp_edge <span class="ot">&lt;-</span> <span class="fu">get.edgelist</span>(iSimp)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="fu">arcplot</span>(simp_edge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ajustando colores por subgrupos y tamaño de los nodos de acuerdo al grado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>s_grp <span class="ot">&lt;-</span> <span class="fu">V</span>(iSimp)<span class="sc">$</span>group</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>s_col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"#a6611a"</span>, <span class="st">"#dfc27d"</span>, <span class="st">"#80cdc1"</span>, <span class="st">"#018571"</span>)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">=</span> s_col[s_grp]</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>node_deg <span class="ot">&lt;-</span> igraph<span class="sc">::</span><span class="fu">degree</span>(iSimp)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">arcplot</span>(simp_edge, <span class="at">lwd.arcs=</span><span class="dv">2</span>, <span class="at">cex.nodes=</span>node_deg<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels=</span><span class="fu">V</span>(iSimp)<span class="sc">$</span>vertex.names,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.labels=</span><span class="st">"darkgreen"</span>, <span class="at">font=</span><span class="dv">1</span>,</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">pch.nodes=</span><span class="dv">21</span>, <span class="at">line=</span><span class="dv">1</span>, <span class="at">col.nodes =</span> cols,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">bg.nodes =</span> cols, <span class="at">show.nodes =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Diagramas de Acordes</strong></p>
+<p>Los diagramas de acordes usan un diseño circular para mostrar interrelaciones en una matriz. Son importantes para evaluar redes ponderadas y dirigidas.</p>
+<p>Los datos se deben tener en una sociomatriz, con las entradas correspondientes al tamaño del enlace y debe tener nombres asignados a filas y a columnas. El paquete <em>circlize()</em> implementa estos gráficos, permitiendo un gran control sobre la apariencia. Son útiles para redes valoradas y dirigidas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(statnet)</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(circlize)</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(FIFA_Nether)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>FIFAm <span class="ot">&lt;-</span> <span class="fu">as.sociomatrix</span>(FIFA_Nether, <span class="at">attrname=</span><span class="st">'passes'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"GK1"</span>, <span class="st">"DF3"</span>, <span class="st">"DF4"</span>, <span class="st">"DF5"</span>, <span class="st">"MF6"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>           <span class="st">"FW7"</span>, <span class="st">"FW9"</span>, <span class="st">"MF10"</span>, <span class="st">"FW11"</span>, <span class="st">"DF2"</span>, <span class="st">"MF8"</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(FIFAm) <span class="ot">=</span> names</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(FIFAm) <span class="ot">=</span> names</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>FIFAm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     GK1 DF3 DF4 DF5 MF6 FW7 FW9 MF10 FW11 DF2 MF8
+GK1    0  42  67  21   2  27   7    5    2  17   3
+DF3   30   0  44  14  42  15   8    7   10  36  29
+DF4   38  43   0  57  18  11   7   21    1   7  28
+DF5    6  14  47   0  11  50  20   40    1   4  42
+MF6    9  28  25  10   0  41  28   37   14  34  21
+FW7    4  12   1  21  21   0  15   33    9  25  18
+FW9    0   0   1   8   7  12   0   31   16   7   2
+MF10   1  11  11  22  43  29  20    0   28  13  21
+FW11   3   2   2   3   7   6  11   15    0  21  12
+DF2   29  38   8   3  45  38  10   18   26   0  15
+MF8   12  25  26  38  23  13  12   32   11  24   0</code></pre>
+</div>
+</div>
+<p>Eliminar los pases menores a 10 para hacer más facil de interpretar el gráfico.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>FIFAm[FIFAm <span class="sc">&lt;</span> <span class="dv">10</span> ] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>FIFAm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     GK1 DF3 DF4 DF5 MF6 FW7 FW9 MF10 FW11 DF2 MF8
+GK1    0  42  67  21   0  27   0    0    0  17   0
+DF3   30   0  44  14  42  15   0    0   10  36  29
+DF4   38  43   0  57  18  11   0   21    0   0  28
+DF5    0  14  47   0  11  50  20   40    0   0  42
+MF6    0  28  25  10   0  41  28   37   14  34  21
+FW7    0  12   0  21  21   0  15   33    0  25  18
+FW9    0   0   0   0   0  12   0   31   16   0   0
+MF10   0  11  11  22  43  29  20    0   28  13  21
+FW11   0   0   0   0   0   0  11   15    0  21  12
+DF2   29  38   0   0  45  38  10   18   26   0  15
+MF8   12  25  26  38  23  13  12   32   11  24   0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chordDiagram</span>(FIFAm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ajuste de parámetros:</p>
+<ul>
+<li><p>Jugadores en la misma posición van a tener el mismo color.</p></li>
+<li><p>Como la red es dirigida, los pases de salida comienzan más lejos del círculo exterior, lo que facilita ver la diferencia entre los pases enviados y los pases recibidos.</p></li>
+<li><p>Ordenar a los jugadores por su posición.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>grid.col <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#AA3939"</span>,<span class="fu">rep</span>(<span class="st">"#AA6C39"</span>,<span class="dv">4</span>), <span class="fu">rep</span>(<span class="st">"#2D882D"</span>,<span class="dv">3</span>),<span class="fu">rep</span>(<span class="st">"#226666"</span>,<span class="dv">3</span>))</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">chordDiagram</span>(FIFAm,<span class="at">directional =</span> <span class="cn">TRUE</span>, <span class="at">grid.col =</span> grid.col, <span class="at">order=</span><span class="fu">c</span>(<span class="st">"GK1"</span>,<span class="st">"DF2"</span>,<span class="st">"DF3"</span>,<span class="st">"DF4"</span>,<span class="st">"DF5"</span>, <span class="st">"MF6"</span>,<span class="st">"MF8"</span>,<span class="st">"MF10"</span>,<span class="st">"FW7"</span>, <span class="st">"FW9"</span>,<span class="st">"FW11"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Mapas de calor</strong></p>
+<p>Los mapas de calor resaltan nodos con mayor cantidad de conexiones en redes ponderadas. Se debe crear una sociomatriz que refleje el peso y se debem definir los nombres de filas y columnas.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(FIFA_Nether)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>FIFAm <span class="ot">&lt;-</span> <span class="fu">as.sociomatrix</span>(FIFA_Nether, <span class="at">attrname=</span><span class="st">'passes'</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(FIFAm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"GK1"</span>, <span class="st">"DF3"</span>, <span class="st">"DF4"</span>, <span class="st">"DF5"</span>, <span class="st">"MF6"</span>, <span class="st">"FW7"</span>, <span class="st">"FW9"</span>, <span class="st">"MF10"</span>, <span class="st">"FW11"</span>, <span class="st">"DF2"</span>, <span class="st">"MF8"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(FIFAm) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"GK1"</span>, <span class="st">"DF3"</span>, <span class="st">"DF4"</span>, <span class="st">"DF5"</span>, <span class="st">"MF6"</span>, <span class="st">"FW7"</span>, <span class="st">"FW9"</span>, <span class="st">"MF10"</span>, <span class="st">"FW11"</span>, <span class="st">"DF2"</span>, <span class="st">"MF8"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"#669999"</span>, <span class="st">"#003333"</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(FIFAm[,<span class="dv">11</span><span class="sc">:</span><span class="dv">1</span>], <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="fu">pal</span>(<span class="dv">60</span>), <span class="at">scale =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Creación de diagramas con otros paquetes de R</strong></p>
+<p><strong>Ggplot2</strong></p>
+<p>Aunque ggplot2 no es un paquete completo de visualización de redes, sus capacidades gráficas avanzadas permiten crear gráficos especializados de redes dirigidas, haciendo relaciones curvos entre cada díada conectada.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>edgeMaker <span class="ot">&lt;-</span> <span class="cf">function</span>(whichRow, <span class="at">len=</span><span class="dv">100</span>, <span class="at">curved =</span> <span class="cn">TRUE</span>){</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  fromC <span class="ot">&lt;-</span> layoutCoordinates[adjacencyList[whichRow, <span class="dv">1</span>],]</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  toC <span class="ot">&lt;-</span> layoutCoordinates[adjacencyList[whichRow, <span class="dv">2</span>], ]</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  graphCenter <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(layoutCoordinates)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  bezierMid <span class="ot">&lt;-</span> <span class="fu">c</span>(fromC[<span class="dv">1</span>], toC[<span class="dv">2</span>])</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  distance1 <span class="ot">&lt;-</span> <span class="fu">sum</span>((graphCenter <span class="sc">-</span> bezierMid)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(distance1 <span class="sc">&lt;</span> <span class="fu">sum</span>((graphCenter <span class="sc">-</span> <span class="fu">c</span>(toC[<span class="dv">1</span>], fromC[<span class="dv">2</span>]))<span class="sc">^</span><span class="dv">2</span>)){</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    bezierMid <span class="ot">&lt;-</span> <span class="fu">c</span>(toC[<span class="dv">1</span>], fromC[<span class="dv">2</span>])</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>  bezierMid <span class="ot">&lt;-</span> (fromC <span class="sc">+</span> toC <span class="sc">+</span> bezierMid) <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(curved <span class="sc">==</span> <span class="cn">FALSE</span>){bezierMid <span class="ot">&lt;-</span> (fromC <span class="sc">+</span> toC) <span class="sc">/</span> <span class="dv">2</span>}</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  edge <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(Hmisc<span class="sc">::</span><span class="fu">bezier</span>(<span class="fu">c</span>(fromC[<span class="dv">1</span>], bezierMid[<span class="dv">1</span>], toC[<span class="dv">1</span>]),</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(fromC[<span class="dv">2</span>], bezierMid[<span class="dv">2</span>], toC[<span class="dv">2</span>]),</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>                            <span class="at">evaluation =</span> len))</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  edge<span class="sc">$</span>Sequence <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>len</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  edge<span class="sc">$</span>Group <span class="ot">&lt;-</span> <span class="fu">paste</span>(adjacencyList[whichRow, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">collapse =</span> <span class="st">"-"</span>)</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(edge)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Función <em>bezier()</em> del paquete <em>Hmisc</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(sna)</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(ggplot2)</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># library(Hmisc)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Se deben transformar los datos a un formato de matriz de aristas y se eliminan pases menores a 10.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(FIFA_Nether)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>fifa <span class="ot">&lt;-</span> FIFA_Nether</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>fifa.edge <span class="ot">&lt;-</span> <span class="fu">as.edgelist.sna</span>(fifa, <span class="at">attrname=</span><span class="st">'passes'</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>fifa.edge <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(fifa.edge)</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(fifa.edge)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">'Value'</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>fifa.edge <span class="ot">&lt;-</span> fifa.edge[fifa.edge<span class="sc">$</span>Value <span class="sc">&gt;</span> <span class="dv">9</span>, ]</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>adjacencyList <span class="ot">&lt;-</span> fifa.edge</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Se usa la función <em>gplot</em> para almacenar las coordenadas de diseño para la función ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>layoutCoordinates <span class="ot">&lt;-</span> <span class="fu">gplot</span>(<span class="fu">network</span>(fifa.edge))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>allEdges <span class="ot">&lt;-</span> <span class="fu">lapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(fifa.edge), edgeMaker, <span class="at">len =</span> <span class="dv">500</span>, <span class="at">curved =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>allEdges <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, allEdges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>new_theme_empty <span class="ot">&lt;-</span> <span class="fu">theme_bw</span>()</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>line <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>rect <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>strip.text <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>axis.text <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>plot.title <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>axis.title <span class="ot">&lt;-</span> <span class="fu">element_blank</span>()</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>new_theme_empty<span class="sc">$</span>plot.margin <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>), </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">unit =</span> <span class="st">"lines"</span>, <span class="at">valid.unit =</span> <span class="dv">3</span>L, <span class="at">class =</span> <span class="st">"unit"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Función <em>ggplot</em>.</p>
+<p>La opción <em>scale_colour_gradient</em> controla la intensidad del degradado y la opción <em>scale_size</em> controla la cantidad de conicidad.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(allEdges)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> zpl <span class="sc">+</span> <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">group =</span> Group, <span class="at">colour =</span> Sequence, <span class="at">size =</span> <span class="sc">-</span>Sequence))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> zpl <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(layoutCoordinates), <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">size =</span> <span class="dv">4</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"gray"</span>)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> zpl <span class="sc">+</span> <span class="fu">scale_colour_gradient</span>(<span class="at">low =</span> <span class="fu">gray</span>(<span class="dv">0</span>), <span class="at">high =</span> <span class="fu">gray</span>(<span class="dv">9</span><span class="sc">/</span><span class="dv">10</span>), <span class="at">guide =</span> <span class="st">"none"</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> zpl <span class="sc">+</span> <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>, <span class="fl">1.5</span>), <span class="at">guide =</span> <span class="st">"none"</span>)</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>zpl <span class="ot">&lt;-</span> zpl <span class="sc">+</span> new_theme_empty</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(zpl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-38-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="capítulo-8---subgrupos" class="level3">
+<h3 class="anchored" data-anchor-id="capítulo-8---subgrupos">Capítulo 8 - Subgrupos</h3>
+<p>Muchas redes sociales del mundo real pueden dividirse en subgrupos de redes densamente conectadas a través de una menor cantidad de aristas, lo que va a ser de gran importancia identificar si se quiere de descubrir el comportamiento de toda la red.</p>
+<p><strong>Cohesión social:</strong> La cohesión social permite identificar subgrupos de individuos con enlaces fuertes y directos.</p>
+<p><strong>Cliques:</strong> Un clique es un subgrafo maximamente completo, es decir un subgrafo donde cada vértice puede acceder a los demás a través de una relación directa.</p>
+<p><em>Ejemplo 1.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>clqexmp <span class="ot">&lt;-</span> <span class="fu">graph_from_literal</span>(A<span class="sc">:</span>B<span class="sc">:</span>C<span class="sc">:</span>D<span class="sc">--</span>A<span class="sc">:</span>B<span class="sc">:</span>C<span class="sc">:</span>D,D<span class="sc">-</span>E,E<span class="sc">-</span>F<span class="sc">-</span>G<span class="sc">-</span>E)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clqexmp, <span class="at">vertex.color =</span> <span class="st">"lightblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-39-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este grafo tiene dos cliques, A, B, C, D y E, F, G. Los cliques relevantes van a ser los de orden igual o superior a 3. Por definición, un clique de orden <span class="math inline">\(k\)</span> también contiene cliques de orden <span class="math inline">\(k-1\)</span>, <span class="math inline">\(k-2\)</span>, etc.</p>
+<p>La función <em>clique_num()</em> muestra el orden del clique más grande.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clique_num</span>(clqexmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<p>La función <em>cliques()</em> retorna una lista de los cliques de un orden mínimo y máximo asignado.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cliques</span>(clqexmp,<span class="at">min=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
++ 3/7 vertices, named, from fdf0210:
+[1] B C D
+
+[[2]]
++ 3/7 vertices, named, from fdf0210:
+[1] E F G
+
+[[3]]
++ 3/7 vertices, named, from fdf0210:
+[1] A B C
+
+[[4]]
++ 4/7 vertices, named, from fdf0210:
+[1] A B C D
+
+[[5]]
++ 3/7 vertices, named, from fdf0210:
+[1] A B D
+
+[[6]]
++ 3/7 vertices, named, from fdf0210:
+[1] A C D</code></pre>
+</div>
+</div>
+<p>La función <em>max_cliques()</em> es útil cuando hay muchos cliques, pues omite los cliques que hacen parte de cliques de orden mayor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max_cliques</span>(clqexmp,<span class="at">min=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
++ 3/7 vertices, named, from fdf0210:
+[1] E F G
+
+[[2]]
++ 4/7 vertices, named, from fdf0210:
+[1] A B D C</code></pre>
+</div>
+</div>
+<p>La función <em>largest_cliques()</em> identifica el clique de orden mayor.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">largest_cliques</span>(clqexmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[[1]]
++ 4/7 vertices, named, from fdf0210:
+[1] A B D C</code></pre>
+</div>
+</div>
+<p>La siguiente linea de código muestra como se puede obtener el nombre de los vértices, en lugar de sus id’s (como lo hacen las funciones anteriores).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(clqexmp)[<span class="fu">unlist</span>(<span class="fu">largest_cliques</span>(clqexmp))]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+ 4/7 vertices, named, from fdf0210:
+[1] A B D C</code></pre>
+</div>
+</div>
+<p><em>Desventajas de los cliques:</em></p>
+<ul>
+<li><p>Es una definición conservadora de un subgrupo cohesivo, pues requiere que cada vertice este relacionado con todos los demás, lo que podría descartar subgrupos realmente cohesivos por falta de unos pocos enlaces.</p></li>
+<li><p>Dada su anterior limitación, en redes grandes del mundo real, los cliques no son comunes.</p></li>
+</ul>
+<p>La siguiente simulación muestra lo poco comunes que son los cliques. Se simularon 4 redes con 25, 50, 100 y 500 nodos. Para cada red, el promedio del grado es como máximo 6. La tabla muestra que el número de cliques se mantiene constante a pesar de que el orden de la red aumenta. Además, los cliques son de tamaño pequeño en todos los casos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">9679</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>g25 <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">25</span>, <span class="dv">75</span>, <span class="at">type=</span><span class="st">"gnm"</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>g50 <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">50</span>, <span class="dv">150</span>, <span class="at">type=</span><span class="st">"gnm"</span>)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>g100 <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">100</span>, <span class="dv">300</span>, <span class="at">type=</span><span class="st">"gnm"</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>g500 <span class="ot">&lt;-</span> <span class="fu">erdos.renyi.game</span>(<span class="dv">500</span>, <span class="dv">1500</span>, <span class="at">type=</span><span class="st">"gnm"</span>)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>,<span class="dv">50</span>,<span class="dv">100</span>,<span class="dv">500</span>)</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>lrgclq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">clique_num</span>(g25),<span class="fu">clique_num</span>(g50), <span class="fu">clique_num</span>(g100),<span class="fu">clique_num</span>(g500))</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>numclq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">length</span>(<span class="fu">cliques</span>(g25,<span class="at">min=</span><span class="dv">3</span>)),<span class="fu">length</span>(<span class="fu">cliques</span>(g50,<span class="at">min=</span><span class="dv">3</span>)),</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">length</span>(<span class="fu">cliques</span> (g100,<span class="at">min=</span><span class="dv">3</span>)),<span class="fu">length</span>(<span class="fu">cliques</span>(g500,<span class="at">min=</span><span class="dv">3</span>)))</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>clqinfo <span class="ot">&lt;-</span> <span class="fu">data.frame</span> (<span class="at">Nodes=</span>nodes,<span class="at">Largest=</span>lrgclq,</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="at">Number=</span>numclq)</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>clqinfo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Nodes Largest Number
+1    25       4     34
+2    50       3     36
+3   100       3     36
+4   500       3     38</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co">#kable(clqinfo, align = "c")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>k-cores</strong></p>
+<p>Es una variación de la idea de los cliques. Un k-core es un subgrafo maximal donde cada vertice está conectado con al menos k vertices. Una de las ventajas del k-core es que es anidado, es decir cada miembro de un 4-core es miembro de un 3-core y así sucesivamente.</p>
+<p><em>Ejemplo DHHS</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="co"># library(statnet)</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("remotes")</span></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co"># remotes::install_github("DougLuke/UserNetR")</span></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co"># library(UserNetR)</span></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co"># data(DHHS)</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co"># library(intergraph)</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>iDHHS <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(DHHS)</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(iDHHS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.312369</code></pre>
+</div>
+</div>
+<p>La función <em>subgraph.edges()</em> selecciona solo las aristas con atributos 3 o 4.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>iDHHS<span class="ot">&lt;-</span><span class="fu">subgraph_from_edges</span>(iDHHS,<span class="fu">E</span>(iDHHS)[collab<span class="sc">&gt;</span><span class="dv">2</span>])</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">edge_density</span>(iDHHS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1533688</code></pre>
+</div>
+</div>
+<p>La función <em>graph.coreness()</em> identifica la estructura k-core</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>coreness<span class="ot">&lt;-</span><span class="fu">coreness</span>(iDHHS)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(coreness)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coreness
+ 1  2  3  4  5  6 
+ 7  6  2  5  2 26 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>maxCoreness<span class="ot">&lt;-</span><span class="fu">max</span>(coreness)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>maxCoreness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+<p>Grafica de la red teniendo en cuenta la estrcutura k-core</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Vname &lt;- get.vertex.attribute(iDHHS, name= 'vertex.names',index=V(iDHHS))</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a><span class="co"># V(iDHHS)$name&lt;-Vname</span></span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(iDHHS)<span class="sc">$</span>color<span class="ot">&lt;-</span>coreness<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
+<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iDHHS,<span class="at">vertex.label.cex=</span><span class="fl">0.8</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Agregar labels que indiquen el valor k-core</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span><span class="fu">rainbow</span>(maxCoreness)</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">4</span>))</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iDHHS,<span class="at">vertex.label=</span>coreness,<span class="at">vertex.color=</span>colors[coreness])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-50-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>El centro de la red está compuesta principalmente por los k-core más altos.</p>
+<p>Para examinar los patrones de cada subgrupo, se van a ir despegando los k-cores del más bajo al más alto con la función <em>induced.subgraph()</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(iDHHS)<span class="sc">$</span>name <span class="ot">&lt;-</span> coreness</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(iDHHS)<span class="sc">$</span>color <span class="ot">&lt;-</span> colors[coreness]</span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>iDHHS1_6 <span class="ot">&lt;-</span> iDHHS</span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>iDHHS2_6 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(iDHHS, <span class="at">vids=</span> <span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">1</span>))</span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>iDHHS3_6 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(iDHHS,<span class="at">vids =</span> <span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">2</span>))</span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>iDHHS4_6 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(iDHHS,<span class="at">vids =</span> <span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">3</span>))</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>iDHHS5_6 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(iDHHS,<span class="at">vids =</span> <span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">4</span>))</span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>iDHHS6_6 <span class="ot">&lt;-</span> <span class="fu">induced_subgraph</span>(iDHHS,<span class="at">vids =</span> <span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">5</span>))</span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a>lay <span class="ot">&lt;-</span> <span class="fu">layout.fruchterman.reingold</span>(iDHHS)</span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span> (<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>),<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>))</span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS1_6,<span class="at">layout=</span>lay,<span class="at">main=</span><span class="st">"All k-cores"</span>)</span>
+<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS2_6,<span class="at">layout=</span>lay[<span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">1</span>),],<span class="at">main=</span><span class="st">"k-cores 2-6"</span>)</span>
+<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS3_6,<span class="at">layout=</span>lay[<span class="fu">which</span> (coreness <span class="sc">&gt;</span> <span class="dv">2</span>),],<span class="at">main=</span><span class="st">"k-cores 3-6"</span>)</span>
+<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS4_6,<span class="at">layout=</span>lay [<span class="fu">which</span> (coreness <span class="sc">&gt;</span> <span class="dv">3</span>),],<span class="at">main=</span><span class="st">"k-cores 4-6"</span>)</span>
+<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS5_6,<span class="at">layout=</span>lay[<span class="fu">which</span> (coreness <span class="sc">&gt;</span> <span class="dv">4</span>),],<span class="at">main=</span><span class="st">"k-cores 5-6"</span>)</span>
+<span id="cb71-18"><a href="#cb71-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span> (iDHHS6_6,<span class="at">layout=</span>lay[<span class="fu">which</span>(coreness <span class="sc">&gt;</span> <span class="dv">5</span>),],<span class="at">main=</span><span class="st">"k-cores 6-6"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Detección comunitaria</strong></p>
+<p>Tanto k-cores como cliques son ejemplos que para identificar subgrupos dependen del patron de relaciones internas definidas en estos. Sin embargo, existen algoritmos de identificación de subgrupos que detectan grupos de tal manera que hayan muchas relaciones internas y algunas entre otros grupos.</p>
+<p><strong>Modularidad</strong></p>
+<p>Es una medida del grado en que los nodos presentan agrupamiento, donde hay mayor densidad dentro de los grupos y menos densidad entre ellos.</p>
+<ul>
+<li><p>Puede ser usada para que un algoritmo intente maximizarla y devuelva la mejor clasificación que explique a la red.</p></li>
+<li><p>Puede ser usada como estadística para cualquier variable de clasificación de nodos.</p></li>
+</ul>
+<p>La modularidad puede variar desde <span class="math inline">\(\frac{-1}{2}\)</span> a <span class="math inline">\(1\)</span>. Entre más cerca de 1, más agrupación exhibe la red con respecto a la variable de agrupamiento dada.</p>
+<p><em>Ejemplo</em>: Red de 9 nodos con dos atributos que clasifican los nodos en tres grupos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>g1 <span class="ot">&lt;-</span> <span class="fu">graph_from_literal</span>(A<span class="sc">-</span>B<span class="sc">-</span>C<span class="sc">-</span>A,D<span class="sc">-</span>E<span class="sc">-</span>F<span class="sc">-</span>D,G<span class="sc">-</span>H<span class="sc">-</span>I<span class="sc">-</span>G,A<span class="sc">-</span>D<span class="sc">-</span>G<span class="sc">-</span>A)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g1)<span class="sc">$</span>grp_good <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(g1)<span class="sc">$</span>grp_bad <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g1,<span class="at">vertex.color =</span>(<span class="fu">V</span>(g1)<span class="sc">$</span>grp_good),<span class="at">vertex.size=</span><span class="dv">20</span>,  <span class="at">main=</span><span class="st">"Good Grouping"</span>)</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(g1,<span class="at">vertex.color=</span>(<span class="fu">V</span>(g1)<span class="sc">$</span>grp_bad),<span class="at">vertex.size=</span><span class="dv">20</span>,<span class="at">main=</span><span class="st">"Bad Grouping"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La agrupación que mejor explica a la red es la de la izquierda, lo que se puede comprobar calculando la modularidad.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(g1,<span class="fu">V</span>(g1)<span class="sc">$</span>grp_good)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4166667</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(g1,<span class="fu">V</span>(g1)<span class="sc">$</span>grp_bad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.3333333</code></pre>
+</div>
+</div>
+<p><em>Ejemplo DHHS</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(intergraph)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(DHHS)</span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>iDHHS <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(DHHS)</span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">V</span>(iDHHS)<span class="sc">$</span>agency)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 0  1  2  3  4  5  6  7  8  9 10 
+ 2  4 12  2  2  3  2 16  3  5  3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">V</span>(iDHHS)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+ 10/54 vertices, from fe6f023:
+ [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(iDHHS,(<span class="fu">V</span>(iDHHS)<span class="sc">$</span>agency<span class="sc">+</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1402264</code></pre>
+</div>
+</div>
+<p>Como la modularidad es de 0.14, entonces la variable <em>agency</em> explica algo del agrupamiento presente en la red.</p>
+<p>La modularidad adquiere un significado más útil si se utiliza para compararse con otra medida relevante. Por ejemplo, comparar la estadística usando dos variables nodales distintas.</p>
+<p><em>Ejemplo Moreno</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Moreno)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>iMoreno <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(Moreno)</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">V</span>(iMoreno)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ 1  2 
+16 17 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(iMoreno,<span class="fu">V</span>(iMoreno)<span class="sc">$</span>gender)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.4761342</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Facebook)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>Facebook <span class="ot">&lt;-</span> <span class="fu">upgrade_graph</span>(Facebook)</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(<span class="fu">factor</span>(<span class="fu">V</span>(Facebook)<span class="sc">$</span>group))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "B" "C" "F" "G" "H" "M" "S" "W"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>grp_num <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(<span class="fu">V</span>(Facebook)<span class="sc">$</span>group))</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(Facebook,grp_num)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6145798</code></pre>
+</div>
+</div>
+<p><strong>Algoritmos de detección de comunidades</strong></p>
+<p>Correr una de las funciones de <em>igraph()</em> que contiene un algoritmo para detección de comunidades:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>cw <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(iMoreno)</span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 1 1 1 1 1 3 3 3 5 5 5 5 1 3 2 2 2 4 4 4 2 2 2 2 2 2 2 2 6 6</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6181474</code></pre>
+</div>
+</div>
+<p>Se identificaron 6 grupos:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cw, iMoreno)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Se úede comparar esta partición generada con alguna partición existente basada en una variable nodal.</p>
+<p><em>Ejemplo DHHS</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>cw <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(iDHHS)</span>
+<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1653754</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 4 5 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 3 3 3 3 3 3 3 3 3 3
+[39] 3 3 3 3 3 2 2 2 2 1 2 1 1 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">V</span>(iDHHS)<span class="sc">$</span>agency,<span class="fu">membership</span>(cw))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+      1  2  3  4  5
+  0   0  0  0  1  1
+  1   4  0  0  0  0
+  2  12  0  0  0  0
+  3   2  0  0  0  0
+  4   2  0  0  0  0
+  5   3  0  0  0  0
+  6   2  0  0  0  0
+  7   0  0 16  0  0
+  8   0  3  0  0  0
+  9   3  2  0  0  0
+  10  3  0  0  0  0</code></pre>
+</div>
+</div>
+<p>Se pueden comparar distintas particiones generadas por algoritmos distintos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Bali)</span>
+<span id="cb104-2"><a href="#cb104-2" aria-hidden="true" tabindex="-1"></a>iBali <span class="ot">&lt;-</span> <span class="fu">asIgraph</span>(Bali)</span>
+<span id="cb104-3"><a href="#cb104-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb104-4"><a href="#cb104-4" aria-hidden="true" tabindex="-1"></a>cw <span class="ot">&lt;-</span> <span class="fu">cluster_walktrap</span>(iBali)</span>
+<span id="cb104-5"><a href="#cb104-5" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2830688</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2 1 2 1 2 2 1 2 2 3 3 3 3 3 2 2 2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>ceb <span class="ot">&lt;-</span> <span class="fu">cluster_edge_betweenness</span>(iBali)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(ceb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2387251</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(ceb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 1 1 1 1 1 1 2 2 2 2 2 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>cs <span class="ot">&lt;-</span> <span class="fu">cluster_spinglass</span>(iBali)</span>
+<span id="cb112-2"><a href="#cb112-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2966742</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 3 2 3 1 3 3 2 3 3 1 1 1 1 1 3 3 3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>cfg <span class="ot">&lt;-</span> <span class="fu">cluster_fast_greedy</span>(iBali)</span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cfg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2629126</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cfg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 2 2 1 2 1 2 2 1 1 3 3 3 3 3 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>clp <span class="ot">&lt;-</span> <span class="fu">cluster_label_prop</span>(iBali)</span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(clp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2387251</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(clp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 1 1 1 1 1 1 2 2 2 2 2 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>cle <span class="ot">&lt;-</span> <span class="fu">cluster_leading_eigen</span>(iBali)</span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2750063</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cle)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 1 1 2 1 1 2 1 1 2 2 2 2 2 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">cluster_louvain</span>(iBali)</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2966742</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 2 1 3 1 1 2 1 1 3 3 3 3 3 1 1 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a>co <span class="ot">&lt;-</span> <span class="fu">cluster_optimal</span>(iBali)</span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modularity</span>(co)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2966742</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">membership</span>(co)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 1 2 1 3 1 1 2 1 1 3 3 3 3 3 1 1 1</code></pre>
+</div>
+</div>
+<p>Todos los algoritmos identificaron 2 o 3 grupos y el rango de la modularidad fue de 0.24 a 0.30.</p>
+<p>Los resultados de la detección de los grupos se pueden comparar utilizando métricas de comparación de clasificación, por ejemplo la estadística Rand ajustada.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb136"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb136-1"><a href="#cb136-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="fu">membership</span>(cw))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    
+     1 2 3
+  BM 0 5 0
+  CT 1 2 0
+  OA 2 1 0
+  SB 0 1 1
+  TL 0 0 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb138"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb138-1"><a href="#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(<span class="fu">as.numeric</span>(<span class="fu">factor</span>(<span class="fu">V</span>(iBali)<span class="sc">$</span>role)),cw,<span class="at">method=</span><span class="st">"adjusted.rand"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3504908</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(cw,ceb,<span class="at">method=</span><span class="st">"adjusted.rand"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6155779</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb142"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb142-1"><a href="#cb142-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(cw,cs,<span class="at">method=</span><span class="st">"adjusted.rand"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8898148</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb144"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb144-1"><a href="#cb144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compare</span>(cw,cfg,<span class="at">method=</span><span class="st">"adjusted.rand"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6691802</code></pre>
+</div>
+</div>
+<p>Graficos de resultados de la detección grupos con diferentes algoritmos</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb146"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb146-1"><a href="#cb146-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb146-2"><a href="#cb146-2" aria-hidden="true" tabindex="-1"></a>op <span class="ot">&lt;-</span><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">2</span>),<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">0</span>))</span>
+<span id="cb146-3"><a href="#cb146-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ceb, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Edge Betweenness"</span>)</span>
+<span id="cb146-4"><a href="#cb146-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cfg, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Fastgreedy"</span>)</span>
+<span id="cb146-5"><a href="#cb146-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clp, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Label Propagation"</span>)</span>
+<span id="cb146-6"><a href="#cb146-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cle, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Leading Eigenvector"</span>)</span>
+<span id="cb146-7"><a href="#cb146-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cs, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Spinglass"</span>)</span>
+<span id="cb146-8"><a href="#cb146-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cw, iBali,<span class="at">vertex.label=</span><span class="fu">V</span>(iBali)<span class="sc">$</span>role,<span class="at">main=</span><span class="st">"Walktrap"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Taller2_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(op)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
