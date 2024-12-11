@@ -331,8 +331,7 @@ cat("Coeficiente de correlación:", round(cor(tabf)[1,2], 2))
 # Grafico
 ggplot(tabf,aes(x=Fila,y=Col)) +
 geom_point(color="red",shape=16,size=2.5)+
-  geom_smooth(method="lm",formula=y ~ poly(x,degree=1),se=FALSE,size=1,
-linetype="solid",color="blue")+
+  geom_abline(slope = 1, intercept = 0, color = "blue", linetype = "solid", size = 1) +
   labs(title="Promedios fila versus promedios columna",x="Promedios exportaciones",y="Promedios importaciones") +
  mitema
 ```
@@ -391,36 +390,621 @@ title(main = "Red de Conflictos", outer = TRUE, line = -2)
 
 
 **b. Calcule e interprete la media global.**
+```{r}
+n <- nrow(dat$Y)
+cat("Media global:", round(sum(dat$Y)/(n*(n-1)),4))
+```
+La media global de la red es cercana a 0, lo que indica que hay pocas posibilidades de que dos países tengan alguna relación de conflicto, omitiendo si los países son propensos a recibir u omitir este tipo de relaciones.
 
 **c. Obtenga y grafique la distribución del *out-degree* y del *in-degree*. Calcule e interprete la media y la desviación estándar de esta distribución.**
 
+```{r}
+#| layout-ncol: 2
+
+dout <- igraph::degree(g6, mode = "out")
+dtdout <- data.frame(table(factor(dout, levels = 0:names(table(dout))[length(table(dout))])))
+colnames(dtdout) <- c("Grado", "Frec") 
+dtdout[,2] <- dtdout[,2]/n
+
+ggplot(dtdout, aes(x = Grado, weight=Frec)) + 
+  geom_bar(position=position_dodge(),width=0.75, fill= "purple") + 
+  scale_y_continuous(breaks=seq(from=0,to=0.5,by=0.1)) +
+  scale_x_discrete(breaks=seq(from=0,to=30,by=5)) +
+ labs(title="Distribución del grado de salida", x="Grado de salida", y="Densidad")+
+mitema 
+
+
+din <- igraph::degree(g6, mode = "in")
+dtdin <- data.frame(table(factor(din, levels = 0:names(table(din))[length(table(din))])))
+colnames(dtdin) <- c("Grado", "Frec") 
+dtdin[,2] <- dtdin[,2]/n
+
+ggplot(dtdin, aes(x = Grado, weight=Frec)) + 
+  geom_bar(position=position_dodge(),width=0.75, fill= "purple") + 
+  scale_y_continuous(breaks=seq(from=0,to=0.5,by=0.1)) +
+  scale_x_discrete(breaks=seq(from=0,to=30,by=5)) +
+ labs(title="Distribución del grado de entrada", x="Grado de entrada", y="Densidad")+
+mitema 
+```
+```{r}
+meand <- rbind(cbind(round(mean(din), 4), round(mean(dout), 4)), cbind(round(sd(din), 4), round(sd(dout), 4)))
+
+colnames(meand) <- c("Grado de entrada", "Grado de salida")
+rownames(meand) <- c("Media", "Desviación estándar")
+kable(meand, align = "c")
+```
+
+La media del grado de entrada y de salida es de 1.56, lo que indica que, en promedio, los países inician o reciben un conflicto  aproximadamente dos veces con otro países. Sin embargo,  existe mayor heterogeneidad en las relaciones de conflicto que emiten los países, que entre las que reciben.
+
+Por otro lado, de acuerdo con las distribuciones de los grados de entrada como de salida, pocos países inician o reciben relaciones de conflicto más de 15 veces, por lo que estos países podrían ser centros o autoridades.
+
 **d. Calcule el coeficiente de correlación entre los valores del *out-degree* y el *in-degree*. Realice un dispersograma de los grados de entrada (eje** $y$**) frente a los grados de salida (eje**$x$**), junto con la recta** $y=x$ **como punto de referencia. ¿Qué se puede concluir?**
+```{r}
+tabd <- cbind(din, dout)
+# Coeficiente de correlacion
+cat("Coeficiente de correlación:", round(cor(tabd)[1,2], 2))
+
+# Grafico
+ggplot(tabd,aes(x=dout,y=din)) +
+geom_point(color="red",shape=16,size=2.5)+
+geom_abline(slope = 1, intercept = 0, color = "blue", linetype = "solid", size = 1) + 
+  labs(title="Grados de entrada versus grados de salida",x="Grados de salida",y="Grados de entrada") +
+ mitema
+
+```
+El coeficiente de correlación lineal entre los grados de entrada y de salida es de 0.6, lo que indica que hay una relación lineal moderada. Así, si las relaciones de conflicto que un país inicia hacia otro aumentan, las relaciones de conflicto recibidas también lo hacen, pero de manera moderada. 
+
+Por otro lado, según el dispersograma, la mayoría de los países tienen menos de 5 conflictos iniciados y recibidos, pero existen dos países que tienen más de 20 conflictos iniciados hacia otros países y uno de ellos ha recibido 15 relaciones de conflicto.
+
 
 **e. Identifique los países mas activos.**
+
+**Por grado**
+```{r}
+#| layout-ncol: 2
+# De entrada
+topdin <- head(sort(din,decreasing = T),5)
+kable(data.frame(Vertice = names(topdin), GradoIn = topdin, row.names = NULL), align = 'c')
+
+# De salida
+topdout <- head(sort(dout, decreasing = T), n = 5)
+kable(data.frame(Vertice = names(topdout), GradoOut = topdout, row.names = NULL), align = 'c')
+```
+Teniendo en cuenta el grado de entrada, el pais más activo en cuanto a recibir relaciones de conflicto es IRAQ, pues es el que más paises le han omitido este tipo de relaciones. De acuerdo al grado de salida, los paises más propensos a emitir relaciones de conflicto son IRAQ y JORDANIA, pues son los que más se han dirigido hacia otros paises con relaciones de conflicto.
+
+**Por fuerza**
+
+```{r}
+#| layout-ncol: 2
+
+# De entrada
+topwdin <- head(sort(strength(g6, mode = "in"), decreasing = T), n = 5)
+kable(data.frame(Vertice = names(topwdin), FuerzaIn = topwdin, row.names = NULL), align = 'c')
+
+# De salida
+topwdout <- head(sort(strength(g6, mode = "out"), decreasing = T), n = 5)
+kable(data.frame(Vertice = names(topwdout), FuerzaOut = topwdout, row.names = NULL), align = 'c')
+```
+Teniendo en cuenta la fuerza de entrada, los paises más propensos a recibir relaciones de conflicto son IRAQ y USA, pues estos son los que más han recibido relaciones de conflicto desde otros paises. De acuerdo a la fuerza de salida, los paises más propensos a emitir relaciones de conflicto son IRAQ, JORDANIA y TURQUIA pues estos son los que más han iniciado relaciones de conflicto hacia otros paises.
+
+**Centros o autoridades**
+```{r, warning=FALSE, message=FALSE}
+# Centros
+hs <- round(igraph::hub_score(graph = g6, scale = T)$vector,2)
+head(sort(hs,decreasing = T),5)
+
+# Autoridades
+as <- round(igraph::authority_score(graph = g6, scale = T)$vector, 2)
+head(sort(as,decreasing = T),5)
+
+```
+
+Los países que más relaciones emiten a países centrales en las relciones de conflicto son TURQUIA, USA e IRAN. Mientras que los países que más relaciones reciben de estos países centrales son IRAQ y GRECIA.
+
 
 ## Punto 7
 
 Para todos los vértices de los cuatro grafos que se presentan a continuación, calcular el grado y las medidas de centralidad. Para cada grafo completar e interpretar la siguiente tabla. Interpretar los resultados.
+
+```{r}
+# Funcion
+fun7 <- function(grafo){
+  #Grado
+  d <- igraph::degree(graph = grafo)
+  
+  #Centralidad de cercanía
+  clss <- igraph::closeness(graph = grafo, normalized = T)
+  #Centralidad de intermediación
+  btw <- igraph::betweenness(graph = grafo, normalized = T)
+  #Centralidad de propia
+  ev <- igraph::eigen_centrality(graph = grafo, scale = T)$vector
+
+  tabla <- data.frame(
+  Medida = c("Media", "Desviacion estándar"),
+  Grado = c(round(mean(d),2), round(sd(d), 2)),
+  Cercania = c(round(mean(clss),2), round(sd(clss), 2)),
+  Intermediacion = c(round(mean(btw),2), round(sd(btw), 2)),
+  Propia = c(round(mean(ev),2), round(sd(ev), 2))
+)
+return(list(Grado = d, Cercania = clss, Intermediacion = btw, Propia= ev, Tabla = tabla))
+}
+```
+
+**Grafo1**
+```{r}
+g1 <- graph_from_literal(2-1, 3-1, 4-1, 5-1)
+set.seed(123)
+plot(g1, vertex.size=35, vertex.color="gray", edge.color="gray", vertex.label.cex=1, vertex.label.color="black")
+```
+
+*Resumén de vértices y de grafo*
+```{r}
+#| layout-ncol: 2
+G1 = fun7(g1)
+# Resumen vertice 
+ResV <- rbind(Grado = G1$Grado, Cernacia = round(G1$Cercania, 2), Intermediacion = round(G1$Intermediacion, 2), Propia = round(G1$Propia, 2)
+)
+ResV <- ResV[, order(as.numeric(colnames(ResV)))]
+kable(ResV, align="c")
+
+# Resumen grafo
+kable(G1$Tabla, align = "c")
+```
+Según la tabla de resumen del grafo, cada nodo tiene en promedio 1 relación con otro nodo.
+
+En promedio, cada nodo es moderadamente cercano a los otros y cada uno dista, en promedio, 0.19 de la medida de cercanía, lo que los hace homogéneos.
+
+En promedio, los nodos tienden a no estar entre otros pares de nodos, pero su medida de intermediación es heterogénea.
+
+En promedio, los nodos están alrededor de nodos que son importantes en la red y cada uno dista, en promedio, 0.22 de la medida, lo que los hace homogéneos.  
+
+
+**Grafo 2**
+```{r}
+g2 <- graph_from_literal(1-2, 2-3, 3-4, 3-5)
+set.seed(123)
+plot(g2, vertex.size=45, vertex.color="gray", edge.color="gray", vertex.label.cex=1, vertex.label.color="black")
+```
+*Resumén de vértices y de grafo*
+```{r}
+#| layout-ncol: 2
+G2 = fun7(g2)
+# Resumen vertice 
+ResV <- rbind(Grado = G2$Grado, Cernacia = round(G2$Cercania, 2), Intermediacion = round(G2$Intermediacion, 2), Propia = round(G2$Propia, 2)
+)
+ResV <- ResV[, order(as.numeric(colnames(ResV)))]
+kable(ResV, align="c")
+
+# Resumen grafo
+kable(G2$Tabla, align = "c")
+```
+Según la tabla de resumen del grafo, cada nodo tiene en promedio 1 relación con otro nodo, pero la desviación estándar indica que hay variabilidad de aproximademante una relación entre estos y la media.
+
+En promedio, cada nodo es moderadamente cercano a los otros y cada uno dista, en promedio, 0.15 de la medida de cercanía, lo que los hace homogéneos.  
+
+En promedio, los nodos tienden a no estar entre otros pares de nodos, pero su medida de intermediación es heterogénea, por lo que algunos pueden si estarlo.
+
+En promedio, los nodos están alrededor de nodos que son importantes en la red y cada uno dista, en promedio, 0.23 de la medida, lo que los hace homogéneos.  
+
+**Grafo 3**
+```{r}
+g3 <- graph_from_literal(1-2, 2-3, 3-4, 4-5)
+set.seed(123)
+plot(g3, vertex.size=45, vertex.color="gray", edge.color="gray", vertex.label.cex=1, vertex.label.color="black")
+```
+*Resumén de vértices y de grafo*
+```{r}
+#| layout-ncol: 2
+G3 = fun7(g3)
+# Resumen vertice 
+ResV <- rbind(Grado = G3$Grado, Cernacia = round(G3$Cercania, 2), Intermediacion = round(G3$Intermediacion, 2), Propia = round(G3$Propia, 2)
+)
+ResV <- ResV[, order(as.numeric(colnames(ResV)))]
+kable(ResV, align="c")
+
+# Resumen grafo
+kable(G3$Tabla, align = "c")
+```
+Según la tabla de resumen del grafo, cada nodo tiene en promedio 1 relación con otro nodo, pero la desviación estándar indica que hay variabilidad de aproximademante una relación entre estos y la media.
+
+En promedio, cada nodo es moderadamente cercano a los otros y cada uno dista, en promedio, 0.12 de la medida de cercanía, lo que los hace homogéneos.  
+
+En promedio, los nodos tienden a estar moderadamente entre otros pares de nodos y su medida de intermediación es heterogénea, por lo que algunos nodos pueden tener una medida alta.
+
+En promedio, los nodos tienden a estar alrededor de nodos que son importantes en la red y cada uno dista, en promedio, 0.23 de la medida, lo que los hace homogéneos.  
+
+
+**Grafo 4**
+```{r}
+g4 <- graph_from_literal(1-2, 2-3, 3-4, 4-5, 5-1)
+set.seed(123)
+plot(g4, vertex.size=45, vertex.color="gray", edge.color="gray", vertex.label.cex=1, vertex.label.color="black")
+```
+
+*Resumén de vértices y de grafo*
+```{r}
+#| layout-ncol: 2
+G4 = fun7(g4)
+# Resumen vertice 
+ResV <- rbind(Grado = G4$Grado, Cernacia = round(G4$Cercania, 2), Intermediacion = round(G4$Intermediacion, 2), Propia = round(G4$Propia, 2)
+)
+ResV <- ResV[, order(as.numeric(colnames(ResV)))]
+kable(ResV, align="c")
+
+# Resumen grafo
+kable(G4$Tabla, align = "c")
+```
+Según la tabla de resumen del grafo, cada nodo tiene 2 relaciones con otros nodos.
+
+Cada nodo es moderadamente cercano a los otros y todos tienen la misma medida de cercanía. 
+
+Los nodos no tienden a estar entre otros pares de nodos y todos tienen la misma medida de intermediación.
+
+Todos los nodos están alrededor de nodos que son importantes en la red.  
+
+
+En general, el grafo que presenta la cualidad de tener nodos que esten alrededor de nodos importantes es el último. Además, también es el grafo que tiene más nodos cercanos de otros.
 
 ## Punto 8
 
 Considere los datos relacionales acerca de los conflictos internacionales del archivo `conflict.RData` despúes de simetrizarla débilmente y remover los nodos aislados:
 
 ```{r, fig.width=6, fig.height=6}
-# datos
-# load("conflict.RData")
-# Y <- dat$Y
-# # remover nodos aislados
-# Y <- 1*( Y*t(Y) > 0 )
-# deg <- apply(X = Y, MARGIN = 1, FUN = sum, na.rm = TRUE)
-# Y <- Y[deg > 0, deg > 0]
+load("conflict.RData")
+g8 <- graph_from_adjacency_matrix(dat$Y, mode = "directed", weighted = TRUE)
+
+# Simetrizacion debil
+g8 <- as_undirected(g8, mode = "collapse")
+is_directed(g8)
+
+# Remover nodos aislados 
+g8 <- igraph::delete_vertices(g8, which(igraph::degree(g8) == 0))
+table(igraph::degree(g8))
 ```
 
+
 **a. Hacer una visualización de la red.**
+```{r}
+## a ####
+set.seed(17112000)
+# a <- layout_as_star(g8)
+# b <- layout_as_tree(g8)
+# c <- layout_in_circle(g8)
+d <- layout_nicely(g8)
+# e <- layout_on_grid(g8)
+# f <- layout_on_sphere(g8)
+# g <- layout_randomly(g8)
+# h <- layout_with_dh(g8)
+i <- layout_with_fr(g8)
+# j <- layout_with_gem(g8)
+# k <- layout_with_graphopt(g8)
+# l <- layout_with_kk(g8)
+# m <- layout_with_lgl(g8)
+# n <- layout_with_mds(g8)
+# o <- layout_with_sugiyama(g8)
+plot(g8, layout = i, vertex.frame.color = "black", vertex.label = NA,
+     vertex.color = "cyan")
+```
 
-**b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles.**
+**b. Caracterizar local y estructuralmente la red, en términos de la distancia, la centralidad, la cohesión, la conectivaidad, y el agrupamento. Utilizar todas las métricas disponbles. C. Interpretar los resultados**
 
-**c. Interpretar los resultados**
+**Distancia**
+
+```{r}
+
+# Matriz de Distancias 
+D <- distances(graph = g8, v = V(g8), to = V(g8))
+
+# Diámetro 
+cat("La distancia más larga entre los países del grafo es de:" , diameter(g8), "\n")
+
+# Sendero del diametro 
+d <- get_diameter(g8)
+cat("Los países que se deben recorrer en el sendero del diametro son:", "\n")
+d
+
+# Visualización del diámetro 
+V(g8)$color <- "white"
+E(g8)$color <- "grey"
+E(g8)$width <- 1
+V(g8)[d]$color <- "red"
+E(g8, path = d)$color <- "red"
+E(g8, path = d)$width <- 2
+set.seed(123)
+plot(g8, vertex.label= NA)
+```
+
+```{r}
+# Distancia geodésica promedio
+cat("La distancia geodésica promedio es de", round(mean_distance(g8),3), "\n" )
+```
+En promedio,  cada país está separado de los demás en 5.
+
+```{r}
+# Distribución de las distancias 
+senderos <- distance_table(g8)$res
+names(senderos) <- 1:length(senderos)
+barplot(prop.table(senderos), xlab = "Distancia geodésica", ylab = "F. Relativa", border = "grey", col = "grey", main = "Distribución de distancias geodésicas")
+```
+De acuerdo al gráfico, la distribución de las distancias \n entre los países se acumula en un rango de 1 a 7
+
+
+ 
+**Centralidad**
+```{r}
+# Grado de cada vertice
+d <- igraph::degree(g8, mode = "all")
+head(sort(d, decreasing = T), n = 5)
+```
+Los países que más se han relacionado con diferentes países en relaciones de conflicto son IRAQ y JORDANIA.
+
+```{r}
+cat("El grado promedio del grafo es de:", round(mean(d),2), "\n")
+```
+
+En promedio, cada país está involucrado en relaciones de conflicto con tres paises.
+
+```{r}
+#Distribución del grado
+dd <- degree_distribution(g8)
+
+#Visualización
+par(mfrow = c(1,2))
+plot(NA, NA, type = "n", xlim = c(0,30), ylim = c(0,0.2), xlab = "Grado", ylab = "Densidad", main = "Distribución de grado")
+hist(d, freq = F, col = "lightskyblue", border = "royalblue", add = T)
+plot((0:max(d))[dd != 0], dd[dd != 0], log = "xy", pch = 16, col = adjustcolor("royalblue", 0.5), xlab = "Log-grado", ylab = "Log-densidad", main = "Distribución de grado (log-log)")
+```
+
+La distribución del grado es sesgada a la derecha, por lo que la mayoría de países tienen relaciones de conflicto con menos de 5 países.
+
+```{r}
+# Fuerza de cada vertice
+wd <- strength(g8)
+head(sort(wd, decreasing = T), n = 5)
+```
+Los países que mayor cantidad de conflictos tienen son IRAQ y USA.
+
+```{r}
+cat("La fuerza promedio del grafo es de:", round(mean(wd),2), "\n")
+```
+En promedio, los países tienen 7 relaciones de conflicto con los demás países.
+
+
+```{r}
+# Grado promedio de los vecinos  más cercados de orden 1
+mnd <- knn(graph = g8, vids = V(g8))$knn
+cat("El grado promedio de los vecinos  más cercados de orden 1 es de:", mean(d[as.numeric(neighbors(graph = g8, v = 1))]))
+```
+En promedio, los países que están directamente conectados con otro país, tienen relaciones de conflicto con 10 países.
+
+```{r}
+# Cercanía
+clss <- igraph::closeness(g8, normalized = TRUE)
+head(sort(clss, decreasing = T), n = 5)
+
+```
+Los países más cercanos a otros países son Malasia, Mozambique, Singapur y Suazilandia.
+
+```{r}
+cat("La cercanía promedio del grafo es de: ", round(mean(clss), 2), "\n")
+```
+
+En promedio, los países en la red de conflictos no presentan tanta cercanía unos entre otros.
+
+```{r}
+# Intermediación 
+btw <- igraph::betweenness(g8, normalized = TRUE)
+head(sort(btw, decreasing = T), n = 5)
+```
+El país JORDANIA es un país moderadamente importante en la red, pues se encuentra en las relaciones de conflicto entre otros pares de países.
+
+```{r}
+cat("La intermediación promedio del grafo es de: ", round(mean(btw), 2), "\n")
+```
+En promedio, los países de la red no están ubicados entre las relaciones de conflicto de los demás países.
+
+```{r}
+# Centralidad propia 
+ev <- igraph::eigen_centrality(g8)$vector
+head(sort(ev, decreasing = T), n = 5)
+```
+Los países que tienen relaciones de conflicto con más países centrales son IRAQ, TURQUIA y USA.
+
+
+
+```{r}
+cat("La centralidad propia promedio del grafo es de: ", round(mean(ev), 2), "\n")
+```
+En promedio, los países no tienen relaciones de conflicto con países centrales.
+
+**Cohesión**
+```{r}
+# Clan
+table(sapply(X = cliques(graph = g8, min = 1, max = 10), FUN = length))
+```
+
+En la red hay 67 triadas que conforman un grafo completo y 9 cliques de tamaño 4.
+```{r}
+# Clanes máximos 
+largest_cliques(graph = g8)
+```
+Hay 9 clanes máximos. Es posible observar que IRAQ está presente en la mayoría de estos.
+
+
+```{r}
+##### Número de clanes 
+clique_num(graph = g8)
+cat("El tamaño del clan máximo es de 4 países \n")
+```
+```{r}
+# Densidad 
+dens <- edge_density(g8);
+cat("La densidad del grafo es de: ", round(dens,2))
+```
+Dado que la densidad de la red es de 0.04, la red está muy alejada de que todos los países tengan relaciones de conflicto con todos los demás.
+
+```{r}
+# Transitividad global
+# Número de triángulos por vértice
+head(sort(count_triangles(graph = g8), decreasing = T), n = 5)
+```
+Hay 2 países que están en más de 30 triangulos en la red.
+
+```{r}
+tr <- transitivity(graph = g8, type = "global")
+cat("La transitividad del grafo es de: ", round(tr,2))
+
+```
+Existe baja propensión de que las triplas de la red de conflictos formen triángulos, pues la cuantificación del coeficiente de agrupamiento es de 0.16.
+
+```{r}
+# Transitividad local 
+head(sort(transitivity(graph = g8, type = "local"), decreasing = T), n = 15)
+```
+De acuerdo a esto, hay al menos 10 países que tienen países vecinos propensos a ser clanes.
+
+**Conectividad**
+```{r}
+cat("El grafo está conectado debilmente: ", is_connected(graph = g8, mode = "weak"), "\n")
+```
+Todos los países no son accesibles desde todos los demás en esta red de conflictos.
+
+```{r}
+#k-conectividad
+vertex_connectivity(g8)
+```
+Si se remueve un vértice, el grafo restante no es conectado.
+
+```{r}
+# arista-conectividad
+edge_connectivity(g8)
+```
+Si se remueve una relación, el grafo restante no es conectado.
+
+```{r}
+# puntos de articulación
+head(articulation_points(g8), n = 5)
+```
+Si se remueve algún país como USA o NIGERIA, el grafo queda desconectado.
+
+
+```{r}
+componentes <- decompose(g8)
+cat("Hay ", length(componentes), "componentes conectadas en el grafo \n")
+```
+
+```{r}
+# tamaño de la componte gigante
+table(sapply(X = componentes, FUN = vcount))
+```
+Cuatro componentes tienen dos países y la componente gigante tiene 83.
+
+```{r}
+max(sapply(X = componentes, FUN = vcount))/vcount(g8)
+```
+La componente gigante tiene el 91 % de los países de la red.
+
+```{r}
+# componente gigante
+g8_gc <- decompose(g8)[[1]]
+
+# vértice-conectividad
+vertex_connectivity(g8_gc)
+
+# arista-conectividad
+edge_connectivity(g8_gc)
+```
+Se requiere la eliminación de un solo país o una sola relación para dividir el componente gigante en componentes adicionales.
+
+```{r}
+# puntos de articulación
+g8_cv <- articulation_points(g8_gc)
+length(g8_cv)
+```
+Hay 22 países que hacen parte de la componente gigante, que al removerlos, desconectarían el grafo.
+
+
+```{r}
+# Proporcion nodos
+round(length(g8_cv)/vcount(g8_gc),2)
+```
+Lo que corresponde al 27% de los países de la componente gigante.
+
+**Agrupación**
+
+Se prueban diferentes algoritmos para ser comparados con el método rand.
+
+```{r, eval = TRUE, echo=FALSE, out.width="70%", fig.pos = 'H', fig.align = 'center', warning=FALSE, message=FALSE}
+#| layout-ncol: 2
+
+# Algoritmos
+set.seed(1234)
+nc <- layout_nicely(g8)
+E(g8)$color <- "gray"
+igraph_options(vertex.size =18)
+
+kc_label_prop <- cluster_label_prop(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_label_prop$membership, main = paste0("label prop: ", "Mod = ", round(modularity(kc_label_prop), 4)))
+
+
+kc_optimal <- cluster_optimal(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_optimal$membership, main = paste0("optimal: ", "Mod = ", round(modularity(kc_optimal), 4)))
+
+
+kc_walktrap <- cluster_walktrap(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_walktrap$membership, main = paste0("walktrap: ", "Mod = ", round(modularity(kc_walktrap), 4)))
+
+
+kc_louvain <- cluster_louvain(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_louvain$membership, main = paste0("louvain: ", "Mod = ", round(modularity(kc_louvain), 4)))
+
+
+kc_infomap <- cluster_infomap(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_infomap$membership, main = paste0("infomap: ", "Mod = ", round(modularity(kc_infomap), 4)))
+
+
+kc_edge <- cluster_edge_betweenness(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_edge$membership, main = paste0("edge betweennness: ", "Mod = ", round(modularity(kc_edge), 4)))
+
+
+kc_fast_greedy <- cluster_fast_greedy(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_fast_greedy$membership, main = paste0("fast greedy: ", "Mod = ", round(modularity(kc_fast_greedy), 4)))
+
+
+kc_leading_eigen <- cluster_leading_eigen(g8)
+plot(g8, vertex.label = NA, layout = nc, vertex.color = kc_leading_eigen$membership, main = paste0("leading eigen: ", "Mod = ", round(modularity(kc_leading_eigen), 4)))
+```
+```{r}
+# comparación usando el índice de rand
+algoritmos <- list(
+  fast_greedy = kc_fast_greedy$membership,
+  leading_eigen = kc_leading_eigen$membership,
+  walktrap = kc_walktrap$membership,
+  louvain = kc_louvain$membership,
+  label_prop = kc_label_prop$membership,
+  optimal = kc_optimal$membership,
+  infomap = kc_infomap$membership,
+  edge_betweenness = kc_edge$membership
+)
+
+comp <- expand.grid(
+  metodo1 = names(algoritmos),
+  metodo2 = names(algoritmos),
+  stringsAsFactors = FALSE
+)
+
+# Aplicar el Índice de Rand
+comp$rand <- mapply(function(m1, m2) {
+  compare(algoritmos[[m1]], algoritmos[[m2]], method = "rand")
+}, comp$metodo1, comp$metodo2)
+
+# Mostrar resultados como matriz
+matriz <- with(comp, tapply(rand, list(metodo1, metodo2), mean))
+kable(round(matriz, 3), align = "c")
+
+```
+Interpretar:
+
 
 ## Punto 9
 
@@ -1004,5 +1588,281 @@ par(op)
 ```
 
 
+### Capítulo 9 - Redes de afiliación
+
+Una red de afiliación es aquella donde los miembros están conectados por su co-pertenencia a un grupo o por su co-participación en algún evento. Por ejemplo, estudiantes que pertenecen a la misma clase pueden considerarse conectados, aunque no sepamos si tienen vínculos sociales directos.
+
+*Ejemplo - estudiantes*
+```{r}
+C1 <- c(1,1,1,0,0,0)
+C2 <- c(0,1,1,1,0,0)
+C3 <- c(0,0,1,1,1,0)
+C4 <- c(0,0,0,0,1,1)
+aff.df <- data.frame(C1,C2,C3,C4)
+row.names(aff.df) <- c("S1","S2","S3","S4","S5","S6")
+kable(aff.df, align = "c")
+```
+Esta es una matriz de incidencia, que indica si un estudiante s pertenece a un grupo g. A diferencia de una matriz de adyacencia, la matriz de incidencia no es cuadrada.
+
+**Grafos bipartitos**
+En redes de afiliación hay dos tipos de nodos: actores (individuos) y grupos (a los que pertenecen los actores). Las relaciones solo conectan actores con grupos, pero no hay conexiones directas entre actores ni entre grupos.
+
+```{r}
+bn <-graph_from_biadjacency_matrix(aff.df)
+plt.x <-c(rep(2,6),rep(4,4))
+plt.y <-c(7:2,6:3)
+lay <-as.matrix(cbind(plt.x,plt.y))
+
+shapes <-c("circle","square")
+colors <-c("blue","red")
+plot(bn,vertex.color=colors[V(bn)$type+1],
+     vertex.shape=shapes[V(bn)$type+1],
+     vertex.size=10,vertex.label.degree=-pi/2,
+     vertex.label.dist=1.2,vertex.label.cex=0.9,
+     layout=lay)
+```
+**Conceptos básicos**
+
+**Creación de redes de afiliación a partir de matrices de incidencia**
+
+En igraph, los grafos bipartitos se crean a partir de matrices de incidencia y, en este caso, las filas se leen como actores y las columnas como grupos o eventos. Además, se tienen dos atributos de vértice:
+ - Nombre del vértice.
+ - Tipo de nodo: type = FALSE para actores o type = TRUE para grupos o eventos.
 
 
+```{r}
+as_biadjacency_matrix(bn)
+V(bn)$type
+V(bn)$name
+```
+
+**Creación de redes de afiliación a partir de listas de relaciones**
+
+Es común construir redes usando listas de relaciones. 
+
+```{r}
+el.df <- data.frame(rbind(c("S1","C1"),
+                          c("S2","C1"),
+                          c("S2","C2"),
+                          c("S3","C1"),
+                          c("S3","C2"),
+                          c("S3","C3"),
+                          c("S4","C2"),
+                          c("S4","C3"),
+                          c("S5","C3"),
+                          c("S5","C4"),
+                          c("S6","C4")))
+
+bn2 <- graph_from_data_frame(el.df,directed=FALSE)
+bn2
+```
+
+
+Sin embargo, el objeto creado no se reconoce como bipartito. Para corregirlo, es necesario especificar manualmente el atributo *type*.
+
+```{r}
+V(bn2)$type <-V(bn2)$name %in% el.df[,1]
+bn2
+
+edge_density(bn)==edge_density(bn2)
+```
+**Visualización de redes de afiliación**
+
+Para visualizar redes de afiliación es útil usar formas y colores que diferencien actores de grupos. 
+
+```{r}
+shapes <-c("circle","square")
+colors <-c("blue","red")
+set.seed(123)
+plot(bn,vertex.color=colors[V(bn)$type+1],
+     vertex.shape=shapes[V(bn)$type+1],
+     vertex.size=10,vertex.label.degree=-pi/2,
+     vertex.label.dist=1.2,vertex.label.cex=0.9)
+```
+**Proyecciones**
+
+En una red de afiliación, los nodos de cada grupo pueden estar conectados indirectamente a partir de las conexiones entre grupos. Por ejemplo: la clase C3 y C4 están conectadas a través del estudiante S5.
+
+Para analizar conexiones directas, se crean proyecciones que transforman la red en una estructura con un único tipo de nodo, así, os actores se vinculan entre ellos cuando forman parte del mismo grupo y los grupos se enlazan entre sí cuando comparten actores en común.
+
+```{r}
+bn.pr <- bipartite_projection(bn)
+bn.pr
+```
+Cada lista puede ser tratada como un objeto igraph cualquiera.
+```{r}
+graph.density(bn.pr$proj1)
+bn.student <-bn.pr$proj1
+bn.class <-bn.pr$proj2
+graph.density(bn.student)
+```
+Obtención de las matrices de adyacencia con pesos:
+```{r}
+as_adjacency_matrix(bn.student,sparse=FALSE,attr="weight")
+as_adjacency_matrix(bn.class,sparse=FALSE,attr="weight")
+
+```
+```{r}
+shapes <-c("circle","square")
+colors <-c("blue","red")
+op <-par(mfrow=c(1,2))
+plot(bn.student,vertex.color="blue",
+     vertex.shape="circle",main="Students",
+     edge.width=E(bn.student)$weight*2,
+     vertex.size=15,vertex.label.degree=-pi/2,
+     vertex.label.dist=1.2,vertex.label.cex=1)
+plot(bn.class,vertex.color="red",
+     vertex.shape="square",main="Classes",
+     edge.width=E(bn.student)$weight*2,
+     vertex.size=15,vertex.label.degree=-pi/2,
+     vertex.label.dist=1.2,vertex.label.cex=1)
+par(op)
+```
+**Ejemplo - actores de Hollywood**
+
+El dataset hwd del paquete UseNetR contiene una red de afiliación de actores de Hollywood conectados a través de películas. El conjunto de datos incluye a las diez películas más populares (según usuarios de IMDb) de cada año desde 1999 hasta 2014, los diez primeros actores listados en IMDb para cada película, los nombres de películas y actores y cada película incluye el año de lanzamiento, la  calificación de usuarios de IMDb y la clasificación de películas según la MPAA.
+
+**Análisis de la red**
+```{r}
+data(hwd)
+h1 <- igraph::upgrade_graph(hwd)
+h1
+V(h1)$name[1:10]
+V(h1)$type[1:10]
+V(h1)$IMDBrating[1:10]
+V(h1)$name[155:165]
+```
+La descripción del grafo h1 confirma que hwd es un grafo bipartito. Los enlaces conectan a cada actor con las películas en las que participó. La red tiene 1,365 nodos y 1,600 vínculos, compuesta por 160 nodos de películas y 1,205 nodos de actores.
+
+Con el paquete igraph, es posible almacenar información de visualización dentro del objeto de la red, como colores y formas de los nodos, configurándolos como atributos de los vértices.
+
+```{r}
+V(h1)$shape <-ifelse(V(h1)$type==TRUE,
+                     "square","circle")
+V(h1)$shape[1:10]
+V(h1)$color <-ifelse(V(h1)$type==TRUE,
+                     "red","lightblue")
+```
+
+Extraer relaciones que son incidentes a ciertos nodos en particular:
+```{r}
+set.seed(123)
+h2 <- subgraph_from_edges(h1, E(h1)[.inc(V(h1)[name %in% c("The Wolf of Wall Street", "Gangs of New York", "The Departed")])])
+plot(h2, layout = layout_with_kk)
+```
+
+**Estadísticas de la red**
+
+*Densidad de la red:* 
+No es muy relevante, ya que todos los actores están conectados a al menos una película y no existen conexiones directas entre actores o películas.
+
+```{r}
+graph.density(h1)
+```
+*Grado*
+```{r}
+table(igraph::degree(h1,v=V(h1)[type==FALSE]))
+mean(igraph::degree(h1,v=V(h1)[type==FALSE]))
+```
+La mayoría de actores solo apareció en una película, pero 15 actores participaron en cinco o más desde 1999. En promedio, cada actor apareció en 1.3 películas.
+
+*Popularidad*
+```{r}
+V(h1)$deg <- igraph::degree(h1)
+V(h1)[type==FALSE & deg > 4]$name
+busy_actor <- data.frame(cbind(
+  Actor = V(h1)[type==FALSE & deg > 4]$name,
+  Movies = V(h1)[type==FALSE & deg > 4]$deg
+))
+busy_actor[order(busy_actor$Movies,decreasing=TRUE),]
+```
+
+Para medir la popularidad de los actores, se suma la calificación promedio de IMDb de las películas en las que actuaron.
+
+```{r}
+for (i in 161:1365) {
+  V(h1)[i]$totrating <- sum(V(h1)[.nei(i)]$IMDBrating)
+}
+
+max(V(h1)$totrating,na.rm=TRUE)
+pop_actor <- data.frame(cbind(
+  Actor = V(h1)[type==FALSE & totrating > 40]$name,
+  Popularity = V(h1)[type==FALSE &
+                       totrating > 40]$totrating))
+pop_actor[order(pop_actor$Popularity,decreasing=TRUE),]
+```
+*Regresión*
+
+Se examina si los actores más ocupados protagonizan películas más populares, a través de la media de calificaciones de IMDb y un análisis de regresión.
+
+```{r, message=FALSE, warning=FALSE}
+for (i in 161:1365) {
+  V(h1)[i]$avgrating <- mean(V(h1)[.nei(i)]$IMDBrating)
+}
+num <- V(h1)[type==FALSE]$deg
+avgpop <- V(h1)[type==FALSE]$avgrating
+summary(lm(avgpop ~ num))
+
+scatter.smooth(num,avgpop,col="lightblue",
+               ylim=c(2,10),span=.8,
+               xlab="Number of Movies",
+               ylab="Avg. Popularity")
+```
+El resultado muestra que no hay una relación clara entre el número de películas y la popularidad.
+
+**Análisis de proyecciones de actores y de películas**
+
+Se crean las dos redes:
+ - Red de actores: Los actores están conectados si actuaron juntos en una película (1,205 nodos).
+ - Red de películas: Las películas están conectadas si comparten actores (160 nodos).
+ 
+```{r}
+h1.pr <-bipartite_projection(h1)
+h1.act <-h1.pr$proj1
+h1.mov <-h1.pr$proj2
+h1.act
+h1.mov
+```
+
+En la red de películas, el tamaño de los nodos representa la popularidad de las películas según su calificación en IMDb.
+
+```{r}
+op <- par(mar = rep(0, 4))
+set.seed(123)
+plot(h1.mov,vertex.color="red",
+     vertex.shape="circle",
+     vertex.size=(V(h1.mov)$IMDBrating)-3,
+     vertex.label=NA)
+par(op)
+```
+Algunas estadísticas descriptivas de esta red son: 
+```{r, warning=FALSE, message=FALSE}
+graph.density(h1.mov)
+count_components(h1.mov)
+clusters(h1.mov)$csize
+table(E(h1.mov)$weight)
+```
+La componente más grande de la red es:
+```{r}
+h2.mov <- induced_subgraph(h1.mov, vids=clusters(h1.mov)$membership==1)
+
+plot(h2.mov,vertex.color="red",
+     edge.width=sqrt(E(h1.mov)$weight),
+     vertex.shape="circle",
+     vertex.size=(V(h2.mov)$IMDBrating)-3,
+     vertex.label=NA)
+table(coreness(h2.mov))
+
+```
+Red con nodos más conectados, agregando labels a los nodos:
+```{r}
+h3.mov <-induced_subgraph(h2.mov, vids=coreness(h2.mov)>4)
+h3.mov
+set.seed(123)
+plot(h3.mov,vertex.color="red",
+     vertex.shape="circle",
+     edge.width=sqrt(E(h1.mov)$weight),
+     vertex.label.cex=0.7,vertex.label.color="darkgreen",
+     vertex.label.dist=0.3,
+     vertex.size=(V(h3.mov)$IMDBrating)-3)
+```
